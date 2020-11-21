@@ -53,6 +53,8 @@ public class QueryFrame extends JFrame
 		query.addItem("Query 10");
 		query.addItem("Query 11");
 		query.addItem("Query 12");
+		query.addItem("Query 13");
+
 		
 		query.addActionListener
 		(
@@ -450,6 +452,33 @@ public class QueryFrame extends JFrame
 				Statement query = con.createStatement();
 				ResultSet result = query.executeQuery
 						(
+								"select s.CodS,s.NomeS\r\n" + 
+										"from Squadra s\r\n" + 
+										"where s.CodS like 'ita%'"	
+						);
+				while (result.next())
+				{	
+					String CodS = result.getString("s.CodS");
+					
+					String NomeS = result.getString("s.NomeS");
+					
+					area.append("-Nome Squadra: \n"+NomeS+"\n\n-Codice Squadra: \n"+CodS+"\n\n------------------------------\n\n");
+				}
+			}
+			catch (Exception e)
+			{
+				area.append("Errore nell'interrogazione");
+			}
+		}
+		
+		if(query.getSelectedItem().equals("Query 13"))
+		{
+			
+			try 
+			{
+				Statement query = con.createStatement();
+				ResultSet result = query.executeQuery
+						(
 						"select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta\r\n" + 
 						"\r\n" + 
 						"from Squadra s1,Squadra s2, Partita p\r\n" + 
@@ -505,7 +534,8 @@ public class QueryFrame extends JFrame
 											JLabel label9 = new JLabel("9) Determinare le squadre che hanno almeno 3 giocatori attaccanti.(NomeSquadra, numatt);														");
 											JLabel label10 = new JLabel("10) Restituire il numero di squadre che hanno partecipato a tutti i tornei.(numsquadre);														");
 											JLabel label11 = new JLabel("11) Elencare i giocatori che non hanno un numero di maglia e che non sono svincolati.(Nome,Cognome);											");
-											JLabel label12 = new JLabel("12) Elencare le partite dell’anno 2018.(NomeCasa,GoalCasa,NomeOspite,GoalOspite).																");
+											JLabel label12 = new JLabel("12) Stampa tutte le squadre di serie A. (NomeS,CodS);																							");
+											JLabel label13 = new JLabel("13) Elencare le partite dell’anno 2018.(NomeCasa,GoalCasa,NomeOspite,GoalOspite).																");
 											
 											label1.setFont(font);
 											label2.setFont(font);
@@ -520,7 +550,8 @@ public class QueryFrame extends JFrame
 											label10.setFont(font);
 											label11.setFont(font);
 											label12.setFont(font);
-											
+											label13.setFont(font);
+
 											
 											
 											pannello.add(label1);
@@ -536,12 +567,14 @@ public class QueryFrame extends JFrame
 											pannello.add(label10);
 											pannello.add(label11);
 											pannello.add(label12);
+											pannello.add(label13);
+
 											
 											pannello.setBackground(Color.WHITE);
 											
 											frame.add(pannello);
 											
-											frame.setSize(710,320);
+											frame.setSize(710,340);
 											frame.setTitle("Info Query");
 											frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 											frame.setVisible(true);

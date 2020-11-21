@@ -8,8 +8,8 @@ public class Test
 	{
 		JFrame frame = new Connetti();
 		
-		frame.setSize(345,288);
-		frame.setTitle("DataBase");
+		frame.setSize(540,400);
+		frame.setTitle("Campionato");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 		frame.setLocation(600,250);

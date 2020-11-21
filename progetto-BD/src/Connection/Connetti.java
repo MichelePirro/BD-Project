@@ -33,6 +33,7 @@ public class Connetti extends JFrame
 		connetti = new JButton("Connetti");
 		connect = new JLabel("Connetti al Database.   >>>");
 		pannello = new JPanel();
+		immagine = new ImageIcon("C:/Users/mikel/OneDrive/Desktop/Università/Secondo Anno/Base Di Dati/ProgettoBD-ExtraCorso/progetto-BD/src/fotobuona.jpg");
 		img = new JLabel(immagine);
 		font = new Font("Arial", Font.BOLD,15);
 		
@@ -47,8 +48,9 @@ public class Connetti extends JFrame
 												{
 													Class.forName("com.mysql.jdbc.Driver");
 													String url = "jdbc:mysql://localhost:3306/Campionato?autoReconnect=true&useSSL=false";
+
 													con = DriverManager.getConnection(url,"root","root");
-													
+
 													JOptionPane.showMessageDialog(null, "Connessione effettuata.");
 													
 													JFrame frame = new Operazioni((com.mysql.jdbc.Connection) con);

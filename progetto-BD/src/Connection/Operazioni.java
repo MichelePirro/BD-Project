@@ -46,6 +46,7 @@ public class Operazioni extends JFrame
 		cancella = new JButton("Cancella");
 		prova = new JButton("Prova");
 		pannello = new JPanel();
+		img = new ImageIcon("C:/Users/mikel/OneDrive/Desktop/Università/Secondo Anno/Base Di Dati/ProgettoBD-ExtraCorso/progetto-BD/src/campvuoto.png");
 		immag = new JLabel(img);
 		
 		pannello.add(query);
@@ -54,7 +55,7 @@ public class Operazioni extends JFrame
 		pannello.add(cancella);
 		pannello.add(immag);
 		pannello.add(prova);
-		
+
 		query.addActionListener(
 									new ActionListener()
 									{
