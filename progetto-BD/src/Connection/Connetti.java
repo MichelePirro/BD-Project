@@ -33,7 +33,9 @@ public class Connetti extends JFrame
 		connetti = new JButton("Connetti");
 		connect = new JLabel("Connetti al Database.   >>>");
 		pannello = new JPanel();
-		immagine = new ImageIcon("C:/Users/mikel/OneDrive/Desktop/Università/Secondo Anno/Base Di Dati/ProgettoBD-ExtraCorso/progetto-BD/src/fotobuona.jpg");
+		//immagine = new ImageIcon("C:/Users/mikel/OneDrive/Desktop/Università/Secondo Anno/Base Di Dati/ProgettoBD-ExtraCorso/progetto-BD/src/fotobuona.jpg");
+		immagine = new ImageIcon(getClass().getResource("/fotobuona.jpg"));
+
 		img = new JLabel(immagine);
 		font = new Font("Arial", Font.BOLD,15);
 		
