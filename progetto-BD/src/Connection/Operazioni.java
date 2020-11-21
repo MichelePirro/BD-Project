@@ -157,6 +157,7 @@ public class Operazioni extends JFrame
 		
 		pannello.setBackground(Color.LIGHT_GRAY);
 		this.add(pannello, BorderLayout.CENTER);
+
 	}
 
 }
