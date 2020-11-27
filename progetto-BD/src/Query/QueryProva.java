@@ -18,7 +18,7 @@ public class QueryProva extends JFrame
 {
 
 	/**
-	 * 
+	 * Query di prova
 	 */
 	private static final long serialVersionUID = 3347886131317848991L;
 
