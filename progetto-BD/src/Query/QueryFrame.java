@@ -3,6 +3,7 @@ package Query;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 import com.mysql.jdbc.Connection;
 
@@ -520,65 +522,41 @@ public class QueryFrame extends JFrame
 									{
 										public void actionPerformed(ActionEvent ev)
 										{
-											JFrame frame = new JFrame();
-											JPanel pannello = new JPanel();
-											JLabel label1 = new JLabel("1) Elencare il nome di tutti gli allenatori che militano in \"Serie A\".(Nome,Cognome,NomeSquadra);												");
-											JLabel label2 = new JLabel("2) Elencare tutte le partite dell'anno 2017 ordinate per data.(codpartita,data);																");
-											JLabel label3 = new JLabel("3) Elencare tutti i giocatori della squadra \"Milan\".(Nome,Cognome);																			");
-											JLabel label4 = new JLabel("4) Elencare i giocatori il cui cognome inizia con \"C\".(Nome,Cognome);																			");
-											JLabel label5 = new JLabel("5) Elencare le squadre che hanno partecipato al torneo \"Champions League\" ma non \"Europa League\".(NomeSquadra);								");
-											JLabel label6 = new JLabel("6) Per ogni campionato, contare le squadre che hanno effettuato partite in casa, 																");
-											JLabel labelx = new JLabel("in cui hanno segnato almeno 3 gol.(NomeCampionato,NumSquadre); 																					");
-											JLabel label7 = new JLabel("7) Determinare la squadra che ha partecipato a più tornei.(NomeSquadra);																		");
-											JLabel label8 = new JLabel("8) Determinare la squadra di \"Serie A\" in cui la somma degli stipendi dei giocatori è la più bassa.(NomeSquadra);								");
-											JLabel label9 = new JLabel("9) Determinare le squadre che hanno almeno 3 giocatori attaccanti.(NomeSquadra, numatt);														");
-											JLabel label10 = new JLabel("10) Restituire il numero di squadre che hanno partecipato a tutti i tornei.(numsquadre);														");
-											JLabel label11 = new JLabel("11) Elencare i giocatori che non hanno un numero di maglia e che non sono svincolati.(Nome,Cognome);											");
-											JLabel label12 = new JLabel("12) Stampa tutte le squadre di serie A. (NomeS,CodS);																							");
-											JLabel label13 = new JLabel("13) Elencare le partite dell’anno 2018.(NomeCasa,GoalCasa,NomeOspite,GoalOspite).																");
-											
-											label1.setFont(font);
-											label2.setFont(font);
-											label3.setFont(font);
-											label4.setFont(font);
-											label5.setFont(font);
-											label6.setFont(font);
-											labelx.setFont(font);
-											label7.setFont(font);
-											label8.setFont(font);
-											label9.setFont(font);
-											label10.setFont(font);
-											label11.setFont(font);
-											label12.setFont(font);
-											label13.setFont(font);
+										    JPanel middlePanel = new JPanel ();
+										   
 
-											
-											
-											pannello.add(label1);
-											pannello.add(label2);
-											pannello.add(label3);
-											pannello.add(label4);
-											pannello.add(label5);
-											pannello.add(label6);
-											pannello.add(labelx);
-											pannello.add(label7);
-											pannello.add(label8);
-											pannello.add(label9);
-											pannello.add(label10);
-											pannello.add(label11);
-											pannello.add(label12);
-											pannello.add(label13);
+										    // create the middle panel components
 
-											
-											pannello.setBackground(Color.WHITE);
-											
-											frame.add(pannello);
-											
-											frame.setSize(710,340);
-											frame.setTitle("Info Query");
-											frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-											frame.setVisible(true);
-											frame.setLocation(600,250);
+										    JTextArea display = new JTextArea ( 16, 58 );
+										    display.setEditable ( false ); // set textArea non-editable
+										    JScrollPane scroll = new JScrollPane ( display );
+										    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+										    
+										    
+										  										    
+										    TextArea t = new TextArea();
+										    t.setText("insert text when you want a new line add \nThen more text....\nThen more text....\nThen more text...."
+										    		+ "\nThen more text....\nThen more text...."+ "\nThen more text....\nThen more text...."+ "\nThen more text....\nThen more text...."
+										    		+ "\nThen more text....\nThen more text...."+ "\nThen more text....\nThen more text...."+ "\nThen more text....\nThen more text...."
+										    		);
+				 						    
+										    //Add Textarea in to middle panel
+										    middlePanel.add(scroll);
+										    middlePanel.add(display);
+										    
+										   
+										    
+
+										    // My code
+										    JFrame frame = new JFrame ();
+										    frame.add ( middlePanel );
+										    frame.add(t);
+										    frame.pack ();
+										    frame.setLocationRelativeTo ( null );
+										    frame.setVisible ( true );
+										    
+										    display.setLineWrap(true);
+										    display.setWrapStyleWord(true);
 										}
 									}								
 								);
