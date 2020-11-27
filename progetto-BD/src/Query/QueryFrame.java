@@ -527,7 +527,7 @@ public class QueryFrame extends JFrame
 
 										    // create the middle panel components
 
-										    JTextArea display = new JTextArea ( 16, 58 );
+										    JTextArea display = new JTextArea ( 1600, 5800 );
 										    display.setEditable ( false ); // set textArea non-editable
 										    JScrollPane scroll = new JScrollPane ( display );
 										    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
@@ -557,8 +557,10 @@ public class QueryFrame extends JFrame
 										    
 										    display.setLineWrap(true);
 										    display.setWrapStyleWord(true);
+										    info.remove(info);
+										    info.repaint();
 										}
-									}								
+						}								
 								);
 		
 		pannello.add(query);
