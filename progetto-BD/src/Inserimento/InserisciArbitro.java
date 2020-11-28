@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciAllenatore extends JFrame
+public class InserisciArbitro extends JFrame
 {
 
 	/**
@@ -20,30 +20,26 @@ public class InserisciAllenatore extends JFrame
 	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
-	private JTextField cf;
+	private JTextField CodAr;
 	private JTextField Nome;
 	private JTextField Cognome;
-	private JTextField Stipendio;
-	private JTextField squadra;
+	private JTextField Tipologia;
 	private JLabel n1;
 	private JLabel n2;
 	private JLabel n3;
 	private JLabel n4;
-	private JLabel n5;
 	private JPanel pannello;
 	private JButton bottone;
 
-	public InserisciAllenatore(Connection con) {
-		cf = new JTextField(20);
+	public InserisciArbitro(Connection con) {
+		CodAr = new JTextField(20);
 		Nome = new JTextField(20);
 		Cognome = new JTextField(20);
-		Stipendio = new JTextField(20);
-		squadra = new JTextField(20);
-		n1 = new JLabel("Inserisci codice fiscale:");
-		n2 = new JLabel("Inserisci squadra:");
-		n3 = new JLabel("Inserisci nome:");
-		n4 = new JLabel("Inserisci cognome:");
-		n5 = new JLabel("Inserisci stipendio:");
+		Tipologia = new JTextField(20);
+		n1 = new JLabel("Inserisci codice Arbitro:");
+		n2 = new JLabel("Inserisci nome:");
+		n3 = new JLabel("Inserisci cognome:");
+		n4 = new JLabel("Inserisci tipolgia:");
 		pannello = new JPanel();
 		bottone = new JButton("Invia");
 
@@ -51,12 +47,12 @@ public class InserisciAllenatore extends JFrame
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Allenatore(CF,CodS,Nome,Cognome,Stipendio)\n" + "value('"
-									+ cf.getText() + "','" + squadra.getText() + "','" + Nome.getText() + "','"
-									+ Cognome.getText() + "','" + Stipendio.getText() + "');");
+							.prepareStatement("INSERT INTO Arbitro(CodAr,Nome,Cognome,Tipologia)\n" + "value('"
+									+ CodAr.getText() + "','" + Nome.getText() + "','"
+									+ Cognome.getText() + "','" + Tipologia.getText() + "');");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-					InserisciAllenatore.this.setVisible(false);
+					InserisciArbitro.this.setVisible(false);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Errore nell'inserimento, riprova.");
 				}
@@ -64,16 +60,15 @@ public class InserisciAllenatore extends JFrame
 		});
 
 		pannello.add(n1);
-		pannello.add(cf);
+		pannello.add(CodAr);
 		pannello.add(n2);
-		pannello.add(squadra);
-		pannello.add(n3);
 		pannello.add(Nome);
-		pannello.add(n4);
+		pannello.add(n3);
 		pannello.add(Cognome);
-		pannello.add(n5);
-		pannello.add(Stipendio);
+		pannello.add(n4);
+		pannello.add(Tipologia);
 		pannello.add(bottone);
+		
 
 		this.add(pannello);
 	}

@@ -73,6 +73,7 @@ public class InserisciSquadra extends JFrame
 		pannello.add(campionato);
 		pannello.add(tcampionato);
 		pannello.add(bottone);
+		System.out.println("x:"+bottone.getX() + "Y: "+bottone.getY() + "width: "+bottone.getWidth()+ "height: "+bottone.getHeight());
 		
 		this.add(pannello, BorderLayout.CENTER);
 	}

@@ -53,7 +53,7 @@ public class InserisciPartita extends JFrame
 		n4 = new JLabel("Inserisci la data della partita:");
 		n5 = new JLabel("Inserisci i goal della squadra di casa:");
 		n6 = new JLabel("Inserisci i goal della squadra ospite:");
-		n7 = new JLabel("Inserisci il numero di giornata(se di campionato):*");
+		n7 = new JLabel("Inserisci il numero di giornata se di campionato:*");
 		pannello = new JPanel();
 		bottone = new JButton("Invia");
 		
