@@ -31,6 +31,7 @@ public class InserisciFrame extends JFrame {
 	private JButton dirigenza;
 	private JButton formazione;
 	private JButton infortunio;
+	private JButton allenamento;
 	private JPanel pannello;
 	private JButton iscrizione;
 	private JPanel pannello1;
@@ -52,6 +53,7 @@ public class InserisciFrame extends JFrame {
 		dirigenza = new JButton("Dirigenza");
 		formazione = new JButton("Formazione");
 		infortunio = new JButton("Infortunio");
+		allenamento = new JButton("Allenamento");
 		iscrizione = new JButton("Iscrizione al torneo");
 
 		pannello = new JPanel();
@@ -71,6 +73,7 @@ public class InserisciFrame extends JFrame {
 		pannello1.add(dirigenza);
 		pannello1.add(formazione);
 		pannello1.add(infortunio);
+		pannello1.add(allenamento);
 
 		pannello2.add(text1);
 		pannello2.add(iscrizione);
@@ -220,6 +223,20 @@ public class InserisciFrame extends JFrame {
 				JFrame frame = new InserisciInfortunio(con);
 
 				frame.setSize(250, 320);
+				frame.setTitle("Inserimento");
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+				frame.setVisible(true);
+				frame.setLocation(550, 150);
+				frame.setResizable(false);
+			}
+		});
+
+		allenamento.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFrame frame = new InserisciAllenamento(con);
+
+				frame.setSize(250, 280);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

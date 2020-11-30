@@ -35,6 +35,7 @@ public class ModificaFrame extends JFrame {
 	private JButton modifica10;
 	private JButton modifica11;
 	private JButton modifica12;
+	private JButton modifica13;
 
 	private JTextField text;
 	private JTextField text1;
@@ -60,6 +61,7 @@ public class ModificaFrame extends JFrame {
 		modifica10 = new JButton("Modifica");
 		modifica11 = new JButton("Modifica");
 		modifica12 = new JButton("Modifica");
+		modifica13 = new JButton("Modifica");
 
 		text = new JTextField(20);
 		text1 = new JTextField(20);
@@ -83,7 +85,7 @@ public class ModificaFrame extends JFrame {
 		combo.addItem("Dirigenza");
 		combo.addItem("Formazione");
 		combo.addItem("Infortunio");
-		combo.addItem("Campionato");
+		combo.addItem("Allenamento");
 
 		combo.addItem("Iscrizione torneo");
 
@@ -105,6 +107,7 @@ public class ModificaFrame extends JFrame {
 		modifica10.setVisible(false);
 		modifica11.setVisible(false);
 		modifica12.setVisible(false);
+		modifica13.setVisible(false);
 
 		text2.setVisible(false);
 		n4.setVisible(false);
@@ -131,6 +134,7 @@ public class ModificaFrame extends JFrame {
 		pannello.add(modifica10);
 		pannello.add(modifica11);
 		pannello.add(modifica12);
+		pannello.add(modifica13);
 
 		combo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
@@ -162,7 +166,7 @@ public class ModificaFrame extends JFrame {
 					n4.setVisible(false);
 
 					combo1.addItem("-----");
-					combo1.addItem("CF");
+					combo1.addItem("CodT");
 					combo1.addItem("Nome");
 					combo1.addItem("Cognome");
 					combo1.addItem("Ruolo");
@@ -245,7 +249,7 @@ public class ModificaFrame extends JFrame {
 					n4.setVisible(false);
 
 					combo1.addItem("-----");
-					combo1.addItem("CF");
+					combo1.addItem("CodT");
 					combo1.addItem("Nome");
 					combo1.addItem("Cognome");
 					combo1.addItem("Stipendio");
@@ -442,6 +446,8 @@ public class ModificaFrame extends JFrame {
 					modifica10.setVisible(false);
 					modifica11.setVisible(false);
 					modifica12.setVisible(false);
+					modifica13.setVisible(false);
+
 					text2.setVisible(false);
 					n4.setVisible(false);
 
@@ -486,6 +492,8 @@ public class ModificaFrame extends JFrame {
 					modifica10.setVisible(false);
 					modifica11.setVisible(false);
 					modifica12.setVisible(false);
+					modifica13.setVisible(false);
+
 					text2.setVisible(false);
 					n4.setVisible(false);
 
@@ -531,6 +539,8 @@ public class ModificaFrame extends JFrame {
 					modifica10.setVisible(true);
 					modifica11.setVisible(false);
 					modifica12.setVisible(false);
+					modifica13.setVisible(false);
+
 					text2.setVisible(false);
 					n4.setVisible(false);
 
@@ -575,6 +585,8 @@ public class ModificaFrame extends JFrame {
 					modifica10.setVisible(false);
 					modifica11.setVisible(true);
 					modifica12.setVisible(false);
+					modifica13.setVisible(false);
+
 					text2.setVisible(false);
 					n4.setVisible(false);
 
@@ -591,6 +603,52 @@ public class ModificaFrame extends JFrame {
 								PreparedStatement query = (PreparedStatement) con
 										.prepareStatement("UPDATE Infortunio SET " + combo1.getSelectedItem() + "='"
 												+ text1.getText() + "' WHERE CodInf='" + text.getText() + "';");
+								query.executeUpdate();
+								JOptionPane.showMessageDialog(null, "Modifica effettuata con successo.");
+								ModificaFrame.this.setVisible(false);
+							} catch (Exception e) {
+								JOptionPane.showMessageDialog(null, "Errore nella modifica, riprova.");
+							}
+						}
+					});
+				}
+
+				if (combo.getSelectedItem().equals("Allenamento")) {
+					n1.setVisible(true);
+					text.setVisible(true);
+					n2.setVisible(true);
+					combo1.setVisible(true);
+					n3.setVisible(true);
+					text1.setVisible(true);
+					modifica1.setVisible(false);
+					modifica2.setVisible(false);
+					modifica3.setVisible(false);
+					modifica4.setVisible(false);
+					modifica5.setVisible(false);
+					modifica6.setVisible(false);
+					modifica7.setVisible(false);
+					modifica8.setVisible(false);
+					modifica9.setVisible(false);
+					modifica10.setVisible(false);
+					modifica11.setVisible(false);
+					modifica12.setVisible(true);
+					modifica13.setVisible(false);
+
+					text2.setVisible(false);
+					n4.setVisible(false);
+
+					combo1.addItem("-----");
+					combo1.addItem("CodAll");
+					combo1.addItem("Luogo");
+					combo1.addItem("Data");
+					combo1.addItem("CodS");
+
+					modifica12.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent ev) {
+							try {
+								PreparedStatement query = (PreparedStatement) con
+										.prepareStatement("UPDATE Allenamento SET " + combo1.getSelectedItem() + "='"
+												+ text1.getText() + "' WHERE CodAll='" + text.getText() + "';");
 								query.executeUpdate();
 								JOptionPane.showMessageDialog(null, "Modifica effettuata con successo.");
 								ModificaFrame.this.setVisible(false);
@@ -619,7 +677,8 @@ public class ModificaFrame extends JFrame {
 					modifica9.setVisible(false);
 					modifica10.setVisible(false);
 					modifica11.setVisible(false);
-					modifica12.setVisible(true);
+					modifica12.setVisible(false);
+					modifica13.setVisible(true);
 
 					text2.setVisible(true);
 					n4.setVisible(true);
@@ -628,7 +687,7 @@ public class ModificaFrame extends JFrame {
 					combo1.addItem("CodS");
 					combo1.addItem("CodT");
 
-					modifica12.addActionListener(new ActionListener() {
+					modifica13.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
 							try {
 								PreparedStatement query = (PreparedStatement) con

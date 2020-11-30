@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -38,7 +39,13 @@ public class QueryProva extends JFrame {
 		query.addItem("Allenatore");
 		query.addItem("Partita");
 		query.addItem("Torneo");
+		query.addItem("Arbitro");
 		query.addItem("Campionato");
+		query.addItem("Stadio");
+		query.addItem("Dirigenza");
+		query.addItem("Formazione");
+		query.addItem("Infortunio");
+		query.addItem("Allenamento");
 		query.addItem("Iscrizioni tornei");
 
 		query.addActionListener(new ActionListener() {
@@ -71,9 +78,9 @@ public class QueryProva extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Giocatore;");
 						area.append(
-								"CF ----- NOME ----- COGNOME ----- RUOLO ----- STIPENDIO ----- NUM.MAGLIA ----- CODS\n\n");
+								"CODT ----- NOME ----- COGNOME ----- RUOLO ----- STIPENDIO ----- NUM.MAGLIA ----- CODS\n\n");
 						while (result.next()) {
-							String CF = result.getString("CF");
+							String CodT = result.getString("CodT");
 
 							String Nome = result.getString("Nome");
 
@@ -87,7 +94,7 @@ public class QueryProva extends JFrame {
 
 							String CodS = result.getString("CodS");
 
-							area.append(CF + " ----- " + Nome + " ----- " + Cognome + " ----- " + Ruolo + " ----- "
+							area.append(CodT + " ----- " + Nome + " ----- " + Cognome + " ----- " + Ruolo + " ----- "
 									+ Stipendio + " ----- " + nummaglia + " ----- " + CodS + "\n\n");
 						}
 					} catch (Exception e) {
@@ -100,9 +107,9 @@ public class QueryProva extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Allenatore;");
-						area.append("CF ----- CODS ----- NOME ----- COGNOME ----- STIPENDIO\n\n");
+						area.append("CODT ----- CODS ----- NOME ----- COGNOME ----- STIPENDIO\n\n");
 						while (result.next()) {
-							String CF = result.getString("CF");
+							String CodT = result.getString("CodT");
 
 							String CodS = result.getString("CodS");
 
@@ -112,7 +119,7 @@ public class QueryProva extends JFrame {
 
 							double Stipendio = result.getDouble("Stipendio");
 
-							area.append(CF + " ----- " + CodS + " ----- " + Nome + " ----- " + Cognome + " ----- "
+							area.append(CodT + " ----- " + CodS + " ----- " + Nome + " ----- " + Cognome + " ----- "
 									+ Stipendio + "\n\n");
 						}
 					} catch (Exception e) {
@@ -126,7 +133,7 @@ public class QueryProva extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Partita;");
 						area.append(
-								"CODP ----- CODSCASA ----- CODSTRASFERTA ----- DATA ----- GOALCASA ----- GOALTRASFERTA ----- N.GIORN\n\n");
+								"CODP ----- CODSCASA ----- CODSTRASFERTA ----- DATA ----- GOALCASA ----- GOALTRASFERTA ----- N.GIORN ----- CODAR -----CODST -----CODF\n\n");
 						while (result.next()) {
 							String CodP = result.getString("CodP");
 
@@ -142,8 +149,15 @@ public class QueryProva extends JFrame {
 
 							int ngiorn = result.getInt("NGiorn");
 
+							String CodAr = result.getString("CodAr");
+
+							String CodST = result.getString("CodST");
+
+							String CodF = result.getString("CodF");
+
 							area.append(CodP + " ----- " + CodSCasa + " ----- " + CodSTrasferta + " ----- " + data
-									+ " ----- " + golc + " ----- " + golt + " ----- " + ngiorn + "\n\n");
+									+ " ----- " + golc + " ----- " + golt + " ----- " + ngiorn + " ----- " + CodAr
+									+ " ----- " + CodST + " ----- " + CodF + "\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -168,6 +182,30 @@ public class QueryProva extends JFrame {
 					}
 				}
 
+				if (query.getSelectedItem().equals("Arbitro")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Arbitro;");
+						area.append("CODAR ----- NOME ----- COGNOME ----- TIPOLOGIA \n\n");
+						while (result.next()) {
+
+							String CodAr = result.getString("CodAr");
+
+							String Nome = result.getString("Nome");
+
+							String Cognome = result.getString("Cognome");
+
+							String Tipologia = result.getString("Tipologia");
+
+							area.append(
+									CodAr + " ----- " + Nome + " ----- " + Cognome + " ----- " + Tipologia + "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
 				if (query.getSelectedItem().equals("Campionato")) {
 
 					try {
@@ -180,6 +218,124 @@ public class QueryProva extends JFrame {
 							String NomeC = result.getString("NomeC");
 
 							area.append(CodC + " ----- " + NomeC + "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Stadio")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Stadio;");
+						area.append("COST ----- COSTOBIGLIETTI ----- POSTIDISPONIBILI ----- POSTIOCCUPATI\n\n");
+						while (result.next()) {
+							String CodST = result.getString("CodST");
+
+							String CostoBigl = result.getString("CostoBigl");
+
+							String PostiDisp = result.getString("PostiDisp");
+
+							String PostiOcc = result.getString("PostiOcc");
+
+							area.append(CodST + " ----- " + CostoBigl + " ----- " + PostiDisp + " ----- " + PostiOcc
+									+ "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Dirigenza")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Dirigenza;");
+						area.append("CODDIR -----CODT ----- SEDE ----- NOMEDIR ----- DURATA\n\n");
+						while (result.next()) {
+							String CodDir = result.getString("CodDir");
+
+							String CodT = result.getString("CodT");
+
+							String Sede = result.getString("Sede");
+
+							String NomeDir = result.getString("NomeDir");
+
+							int Durata = result.getInt("Durata");
+
+							area.append(CodDir + " ----- " + CodT + " ----- " + Sede + " ----- " + NomeDir + " ----- "
+									+ Durata + "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Formazione")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Formazione;");
+						area.append("CODF ----- NOMESQUADRA ----- MODULO ----- SOSTITUTI\n\n");
+						while (result.next()) {
+							String CodF = result.getString("CodF");
+
+							String NomeSquadra = result.getString("NomeSquadra");
+
+							String Modulo = result.getString("Modulo");
+
+							int Sostituti = result.getInt("Sostituti");
+
+							area.append(CodF + " ----- " + NomeSquadra + " ----- " + Modulo + " ----- " + Sostituti
+									+ "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Infortunio")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Infortunio;");
+						area.append("CODINF ----- CODT ----- TIPOLOGIA ----- GRAVITA ----- MEDICOCURANTE\n\n");
+						while (result.next()) {
+							String CodInf = result.getString("CodInf");
+
+							String CodT = result.getString("CodT");
+
+							String Tipologia = result.getString("Tipologia");
+
+							String Gravita = result.getString("Gravita");
+
+							String MedicoCurante = result.getString("MedicoCurante");
+
+							area.append(CodInf + " ----- " + CodT + " ----- " + Tipologia + " ----- " + Gravita
+									+ " ----- " + MedicoCurante + "\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Allenamento")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT * from Allenamento;");
+						area.append("CODALL ----- LUOGO ----- DATA ----- CODS\n\n");
+						while (result.next()) {
+							String CodAll = result.getString("CodAll");
+
+							String Luogo = result.getString("Luogo");
+
+							Date Data = result.getDate("Data");
+
+							String CodS = result.getString("CodS");
+
+							area.append(CodAll + " ----- " + Luogo + " ----- " + Data + " ----- " + CodS + "\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
