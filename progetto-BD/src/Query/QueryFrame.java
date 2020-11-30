@@ -102,8 +102,8 @@ public class QueryFrame extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery(
-								"select p.codP,p.Data\r\n" + "from partita p\r\n" + "where p.Data > '2016-12-31'\r\n"
-										+ "AND p.Data < '2018-01-01'\r\n" + "ORDER BY p.Data");
+								"select p.codP,p.Data\r\n" + "from partita p\r\n" + "where p.Data > '2020-01-01'\r\n"
+										+ "AND p.Data < '2021-01-01'\r\n" + "ORDER BY p.Data");
 						while (result.next()) {
 							String codp = result.getString("p.codP");
 
@@ -129,7 +129,7 @@ public class QueryFrame extends JFrame {
 
 							String Cognome = result.getString("g.Cognome");
 
-							area.append("-Nome giocatore: \n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
+							area.append("-Nome giocatore: \n\n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -239,9 +239,9 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select s.NomeS,COUNT(g.cf) AS numatt\r\n"
+						ResultSet result = query.executeQuery("select s.NomeS,COUNT(g.CodT) AS numatt\r\n"
 								+ "from Squadra s, Giocatore g\r\n" + "where s.codS=g.codS\r\n"
-								+ "AND g.ruolo=\"Attaccante\"\r\n" + "group by s.nomeS\r\n" + "having numatt > 2");
+								+ "AND g.ruolo= \"Attaccante\"\r\n" + "group by s.nomeS\r\n" + "having numatt > 2");
 						while (result.next()) {
 							String NomeS = result.getString("s.NomeS");
 
@@ -285,12 +285,13 @@ public class QueryFrame extends JFrame {
 						ResultSet result = query.executeQuery("select g.Cognome, g.Nome\r\n" + "from Giocatore g\r\n"
 								+ "where g.nummaglia is NULL\r\n" + "AND g.codS is NOT NULL");
 						while (result.next()) {
+							
+							String Nome = result.getString("g.Nome");
+							
 							String Cognome = result.getString("g.Cognome");
 
-							String Nome = result.getString("g.Nome");
-
-							area.append("-Cognome giocatore: \n" + Cognome + "\n\n-Nome giocatore: \n" + Nome
-									+ "\n\n------------------------------\n\n");
+							area.append("\n-Nome giocatore: \n\n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome +
+									 "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -324,8 +325,8 @@ public class QueryFrame extends JFrame {
 								"select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta\r\n" + "\r\n"
 										+ "from Squadra s1,Squadra s2, Partita p\r\n" + "\r\n"
 										+ "where s1.codS=p.CodSCasa\r\n" + "\r\n" + "AND s2.codS=p.CodSTrasferta\r\n"
-										+ "\r\n" + "AND p.data >'2017-12-31'\r\n" + "\r\n"
-										+ "AND p.data <'2019-01-01' ");
+										+ "\r\n" + "AND p.data >'2020-01-01'\r\n" + "\r\n"
+										+ "AND p.data <'2021-01-01' ");
 						while (result.next()) {
 							String Casa = result.getString("Casa");
 
@@ -337,6 +338,55 @@ public class QueryFrame extends JFrame {
 
 							area.append(Casa + " " + goalCasa + " - " + goalTrasferta + " " + Trasferta
 									+ "\n\n------------------------------\n\n");
+		
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+				
+				if (query.getSelectedItem().equals("Query 16")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery(
+								"select s1.NomeS AS Casa,s2.NomeS AS Trasferta, CodST AS NomeStadio\r\n" + "\r\n"
+										+ "from Squadra s1,Squadra s2, Partita p\r\n" + "\r\n"
+										+ "where s1.codS=p.CodSCasa\r\n" + "\r\n" + "AND s2.codS=p.CodSTrasferta\r\n"
+										+ "\r\n");
+						while (result.next()) {
+							String Casa = result.getString("Casa");
+
+							String Trasferta = result.getString("Trasferta");
+
+							String NomeStadio = result.getString("NomeStadio");
+
+
+							area.append("-Partita \n\n" + Casa + " - " + Trasferta + "\n\n" + "Stadio: \n\n" + NomeStadio  
+									+ "\n\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+				
+				if (query.getSelectedItem().equals("Query 17")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("select CodST, PostiDisp, PostiOcc\r\n" + "\r\n"
+						+ "from Stadio s\r\n" );
+						
+						while (result.next()) {
+							String CodST = result.getString("CodST");
+
+							int postiDisp = result.getInt("postiDisp");
+							
+							int postiOcc = result.getInt("postiOcc");
+
+
+							area.append("-Nome Stadio: \n" + CodST + "\n\n-Numero di posti disponibili: \n" + postiDisp +
+									"\n\n-Numero di posti occupati: \n" + postiOcc + "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
