@@ -123,7 +123,7 @@ public class QueryFrame extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query
 								.executeQuery("select g.Nome,g.Cognome\r\n" + "from Giocatore g, Squadra s\r\n"
-										+ "where s.nomeS=\"Milan\" \r\n" + "AND s.codS=g.codS");
+										+ "where s.nomeS=\"Napoli\" \r\n" + "AND s.codS=g.codS");
 						while (result.next()) {
 							String Nome = result.getString("g.Nome");
 

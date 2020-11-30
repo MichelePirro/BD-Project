@@ -52,7 +52,6 @@ public class Operazioni extends JFrame {
 		pannello.add(cancella);
 		pannello.add(immag);
 		pannello.add(prova);
-		
 
 		query.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
@@ -74,10 +73,10 @@ public class Operazioni extends JFrame {
 
 				JFrame frame = new InserisciFrame(con);
 
-				frame.setSize(430, 280);
+				frame.setSize(650, 300);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				
+
 				frame.setVisible(true);
 				frame.setLocation(600, 250);
 				frame.setResizable(false);
@@ -105,7 +104,7 @@ public class Operazioni extends JFrame {
 
 				JFrame frame = new RemoveFrame(con);
 
-				frame.setSize(310, 210);
+				frame.setSize(310, 250);
 				frame.setTitle("Cancella");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

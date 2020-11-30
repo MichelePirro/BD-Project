@@ -27,6 +27,10 @@ public class InserisciFrame extends JFrame {
 	private JButton torneo;
 	private JButton arbitro;
 	private JButton campionato;
+	private JButton stadio;
+	private JButton dirigenza;
+	private JButton formazione;
+	private JButton infortunio;
 	private JPanel pannello;
 	private JButton iscrizione;
 	private JPanel pannello1;
@@ -44,6 +48,10 @@ public class InserisciFrame extends JFrame {
 		torneo = new JButton("Torneo");
 		arbitro = new JButton("Arbitro");
 		campionato = new JButton("Campionato");
+		stadio = new JButton("Stadio");
+		dirigenza = new JButton("Dirigenza");
+		formazione = new JButton("Formazione");
+		infortunio = new JButton("Infortunio");
 		iscrizione = new JButton("Iscrizione al torneo");
 
 		pannello = new JPanel();
@@ -57,8 +65,13 @@ public class InserisciFrame extends JFrame {
 		pannello1.add(allenatore);
 		pannello1.add(partita);
 		pannello1.add(torneo);
-		pannello1.add(campionato);
 		pannello1.add(arbitro);
+		pannello1.add(campionato);
+		pannello1.add(stadio);
+		pannello1.add(dirigenza);
+		pannello1.add(formazione);
+		pannello1.add(infortunio);
+
 		pannello2.add(text1);
 		pannello2.add(iscrizione);
 
@@ -132,6 +145,20 @@ public class InserisciFrame extends JFrame {
 			}
 		});
 
+		arbitro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFrame frame = new InserisciArbitro(con);
+
+				frame.setSize(250, 270);
+				frame.setTitle("Inserimento");
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+				frame.setVisible(true);
+				frame.setLocation(550, 150);
+				frame.setResizable(false);
+			}
+		});
+
 		campionato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciCampionato(con);
@@ -146,11 +173,53 @@ public class InserisciFrame extends JFrame {
 			}
 		});
 
-		arbitro.addActionListener(new ActionListener() {
+		stadio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
-				JFrame frame = new InserisciArbitro(con);
+				JFrame frame = new InserisciStadio(con);
 
 				frame.setSize(250, 270);
+				frame.setTitle("Inserimento");
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+				frame.setVisible(true);
+				frame.setLocation(550, 150);
+				frame.setResizable(false);
+			}
+		});
+
+		dirigenza.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFrame frame = new InserisciDirigenza(con);
+
+				frame.setSize(250, 320);
+				frame.setTitle("Inserimento");
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+				frame.setVisible(true);
+				frame.setLocation(550, 150);
+				frame.setResizable(false);
+			}
+		});
+
+		formazione.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFrame frame = new InserisciFormazione(con);
+
+				frame.setSize(250, 270);
+				frame.setTitle("Inserimento");
+				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+				frame.setVisible(true);
+				frame.setLocation(550, 150);
+				frame.setResizable(false);
+			}
+		});
+
+		infortunio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				JFrame frame = new InserisciInfortunio(con);
+
+				frame.setSize(250, 320);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
