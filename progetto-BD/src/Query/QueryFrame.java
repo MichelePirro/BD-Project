@@ -129,7 +129,7 @@ public class QueryFrame extends JFrame {
 
 							String Cognome = result.getString("g.Cognome");
 
-							area.append("-Nome giocatore: \n\n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
+							area.append("-Nome giocatore: \n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -163,10 +163,10 @@ public class QueryFrame extends JFrame {
 						ResultSet result = query.executeQuery("select s.nomeS\r\n"
 								+ "from Squadra s, Torneo t, PartecipaT p\r\n" + "where s.codS=p.codS\r\n"
 								+ "AND p.codT=t.codT\r\n" + "AND t.NomeT=\"Champions League\"\r\n"
-								+ "AND s.codS not in\r\n" + "		(\r\n" + "			select s.codS\r\n"
-								+ "			from Squadra s, Torneo t, PartecipaT p\r\n"
-								+ "			where s.codS=p.codS\r\n" + "			AND p.codT=t.codT\r\n"
-								+ "			AND t.NomeT=\"Europa League\"	\r\n" + "		)");
+								+ "AND s.codS not in\r\n" + "(\r\n" + "select s.codS\r\n"
+								+ "from Squadra s, Torneo t, PartecipaT p\r\n"
+								+ "where s.codS=p.codS\r\n" + "AND p.codT=t.codT\r\n"
+								+ "AND t.NomeT=\"Europa League\"\r\n" + ")");
 						while (result.next()) {
 							String NomeS = result.getString("s.NomeS");
 
@@ -203,8 +203,8 @@ public class QueryFrame extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("select N.nomeS\r\n" + "from N\r\n"
-								+ "where N.numtor = \r\n" + "		(\r\n" + "			select MAX(N.numtor)\r\n"
-								+ "			from N\r\n" + "		);\r\n" + "");
+								+ "where N.numtor = \r\n" + "(\r\n" + "select MAX(N.numtor)\r\n"
+								+ "from N\r\n" + ");\r\n" + "");
 
 						while (result.next()) {
 							String NomeS = result.getString("N.NomeS");
@@ -223,8 +223,8 @@ public class QueryFrame extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query
 								.executeQuery("select S.NomeS\r\n" + "from S\r\n" + "where S.sommastip =\r\n"
-										+ "			(\r\n" + "				select MIN(S.sommastip)\r\n"
-										+ "				from S\r\n" + "			);");
+										+ "(\r\n" + "select MIN(S.sommastip)\r\n"
+										+ "from S\r\n" + ");");
 						while (result.next()) {
 							String NomeS = result.getString("S.NomeS");
 
@@ -260,13 +260,13 @@ public class QueryFrame extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("select count(s.codS) AS numsquadre\r\n" + "\r\n"
-								+ "from Squadra s\r\n" + "where not exists (\r\n" + "\r\n" + "			select *\r\n"
-								+ "\r\n" + "                    	from Torneo t\r\n"
-								+ "			where not exists (\r\n" + "\r\n" + "						select *\r\n"
-								+ "\r\n" + "						from Partecipat p\r\n"
-								+ "                                        	where p.codS=s.codS\r\n" + "\r\n"
-								+ "                                        	and p.codT=t.codT\r\n" + "	\r\n"
-								+ "					)\r\n" + "		);");
+								+ "from Squadra s\r\n" + "where not exists (\r\n" + "\r\n" + "select *\r\n"
+								+ "\r\n" + "from Torneo t\r\n"
+								+ "where not exists (\r\n" + "\r\n" + "select *\r\n"
+								+ "\r\n" + "from Partecipat p\r\n"
+								+ "where p.codS=s.codS\r\n" + "\r\n"
+								+ "and p.codT=t.codT\r\n" + "\r\n"
+								+ ")\r\n" + ");");
 						while (result.next()) {
 							int numsquadre = result.getInt("numsquadre");
 
@@ -392,6 +392,45 @@ public class QueryFrame extends JFrame {
 						area.append("Errore nell'interrogazione");
 					}
 				}
+				
+				if (query.getSelectedItem().equals("Query 23")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery(
+								"SELECT s1.NomeS AS Casa, p.GoalCasa, s2.NomeS AS Trasferta, p.GoalTrasferta, p.Ncartellini, AR.Nome AS NomeArbitro, AR.Cognome AS CognomeArbitro " +
+								"FROM Squadra s1, Squadra s2, Partita p " +
+								"INNER JOIN Arbitro AR " +
+								"ON p.CodAr = AR.CodAr " +
+								"WHERE s1.CodS = P.CodSCasa AND s2.CodS = p.CodSTrasferta");
+						
+						while (result.next()) {
+							String Casa = result.getString("Casa");
+							
+							int GoalCasa = result.getInt("GoalCasa");
+
+							String Trasferta = result.getString("Trasferta");
+
+							int GoalTrasferta = result.getInt("GoalTrasferta");
+							
+							String NomeArbitro = result.getString("NomeArbitro");
+							
+							String COGNOMEARBITRO = result.getString("CognomeArbitro");
+
+							int Ncartellini = result.getInt("Ncartellini");
+
+
+							area.append("-Partita: " + Casa + " " +GoalCasa + " " + "-" + " " + Trasferta + " " + GoalTrasferta +"\n\n" 
+									+ "-Arbitro: " + NomeArbitro +" " + "-" + " " + COGNOMEARBITRO 
+									+"\n-N° Cartellini: " + Ncartellini +"\n\n"
+									+"\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						System.out.println(e.getLocalizedMessage());
+						e.printStackTrace();
+						area.append("Errore nell'interrogazione");
+					}
+				}
 
 			}
 		}
@@ -433,10 +472,10 @@ public class QueryFrame extends JFrame {
 						+ "20) Elencare tutti i giocatori che hanno subito un infortunio con gravità maggiore rispetto agli altri\n"
 						+ "21) Visualizzare l’arbitro che ha ammonito più giocatori.\n"
 						+ "22) Elencare tutti gli allenatori che hanno un contratto con una durata maggiore di 1 anno.\n"
-						+ "23) Visualizzare la formazione e il modulo della singola partita disputata.\n"
-						+ "24) Inserire nella Base di dati tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri e dirigenza.\n"
-						+ "25) Modificare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri e dirigenza.\n"
-						+ "26) Cancellare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri e dirigenza.\n");
+						+ "23) Visualizzare il modulo della singola partita disputata.\n"
+						+ "24) Inserire nella Base di dati tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n"
+						+ "25) Modificare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n"
+						+ "26) Cancellare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n");
 
 				t.setEditable(false);
 
