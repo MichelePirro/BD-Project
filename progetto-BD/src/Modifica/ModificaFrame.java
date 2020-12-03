@@ -179,7 +179,7 @@ public class ModificaFrame extends JFrame {
 							try {
 								PreparedStatement query = (PreparedStatement) con
 										.prepareStatement("UPDATE Giocatore SET " + combo1.getSelectedItem() + "='"
-												+ text1.getText() + "' WHERE CF='" + text.getText() + "';");
+												+ text1.getText() + "' WHERE CodT='" + text.getText() + "';");
 								query.executeUpdate();
 								JOptionPane.showMessageDialog(null, "Modifica effettuata con successo.");
 								ModificaFrame.this.setVisible(false);
@@ -260,7 +260,7 @@ public class ModificaFrame extends JFrame {
 							try {
 								PreparedStatement query = (PreparedStatement) con
 										.prepareStatement("UPDATE Allenatore SET " + combo1.getSelectedItem() + "='"
-												+ text1.getText() + "' WHERE CF='" + text.getText() + "';");
+												+ text1.getText() + "' WHERE CodT='" + text.getText() + "';");
 								query.executeUpdate();
 								JOptionPane.showMessageDialog(null, "Modifica effettuata con successo.");
 								ModificaFrame.this.setVisible(false);
