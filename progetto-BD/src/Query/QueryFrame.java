@@ -35,7 +35,6 @@ public class QueryFrame extends JFrame {
 	private JTextArea area;
 	private JPanel pannello;
 	private JButton info;
-	private JButton enter;
 
 	private JScrollPane pane;
 	private Font font;
@@ -168,10 +167,13 @@ public class QueryFrame extends JFrame {
 					pannello2.add(textfield);
 					pannello2.add(bottone);
 					frame2.add(pannello2);
+					frame2.setLocation(550, 150);
 					frame2.setVisible(true);
+
 					bottone.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
 							try {
+								frame2.setVisible(false);
 								Statement query = con.createStatement();
 								ResultSet result = query
 										.executeQuery("select g.nome,g.cognome\r\n" + "from Giocatore g\r\n"
@@ -185,7 +187,6 @@ public class QueryFrame extends JFrame {
 											+ "\n\n------------------------------\n\n");
 								}
 							} catch (Exception e) {
-								e.printStackTrace();
 								area.append("Errore nell'interrogazione");
 							}
 						}
