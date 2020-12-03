@@ -17,6 +17,7 @@ public class InserisciCampionato extends JFrame
 
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = -8712115776147084860L;
 
