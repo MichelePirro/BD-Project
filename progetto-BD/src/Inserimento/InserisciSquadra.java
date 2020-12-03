@@ -12,8 +12,7 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciSquadra extends JFrame
-{
+public class InserisciSquadra extends JFrame {
 
 	/**
 	 * 
@@ -28,9 +27,8 @@ public class InserisciSquadra extends JFrame
 	private JTextField tcampionato;
 	private JButton bottone;
 	private JPanel pannello;
-	
-	public InserisciSquadra(Connection con)
-	{
+
+	public InserisciSquadra(Connection con) {
 		codice = new JLabel("Inserisci codice squadra:");
 		tcodice = new JTextField(20);
 		nome = new JLabel("Inserisci nome squadra:");
@@ -39,33 +37,22 @@ public class InserisciSquadra extends JFrame
 		tcampionato = new JTextField(20);
 		bottone = new JButton("Invia");
 		pannello = new JPanel();
-		
-		
-		bottone.addActionListener(
-									new ActionListener()
-									{
-										public void actionPerformed(ActionEvent ev)
-										{
-											try 
-											{
-												PreparedStatement query = (PreparedStatement) con.prepareStatement
-														(
-														"INSERT INTO Squadra(CodS,NomeS,CodC)\n"+
-														"value('"+tcodice.getText()+"','"+tnome.getText()+"','"+tcampionato.getText()+"');"
-														);
-												query.executeUpdate();
-												JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-												InserisciSquadra.this.setVisible(false);
-											}
-											catch (Exception e)
-											{
-												JOptionPane.showMessageDialog(null, "Errore nell'inserimento, riprova.");
-											}
-										}
-									}
-									);
-		
-		
+
+		bottone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					PreparedStatement query = (PreparedStatement) con
+							.prepareStatement("INSERT INTO Squadra(CodS,NomeS,CodC)\n" + "value('" + tcodice.getText()
+									+ "','" + tnome.getText() + "','" + tcampionato.getText() + "');");
+					query.executeUpdate();
+					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
+					InserisciSquadra.this.setVisible(false);
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Errore nell'inserimento, riprova.");
+				}
+			}
+		});
+
 		pannello.add(codice);
 		pannello.add(tcodice);
 		pannello.add(nome);
@@ -73,8 +60,7 @@ public class InserisciSquadra extends JFrame
 		pannello.add(campionato);
 		pannello.add(tcampionato);
 		pannello.add(bottone);
-		System.out.println("x:"+bottone.getX() + "Y: "+bottone.getY() + "width: "+bottone.getWidth()+ "height: "+bottone.getHeight());
-		
+
 		this.add(pannello, BorderLayout.CENTER);
 	}
 }
