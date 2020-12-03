@@ -28,6 +28,7 @@ import Inserimento.InserisciSquadra;
 public class QueryFrame extends JFrame {
 	/**
 	 * 
+	 * 
 	 */
 	private static final long serialVersionUID = 3478903542834318161L;
 
@@ -88,9 +89,6 @@ public class QueryFrame extends JFrame {
 		query.addItem("Query 21");
 		query.addItem("Query 22");
 		query.addItem("Query 23");
-		query.addItem("Query 24");
-		query.addItem("Query 25");
-		query.addItem("Query 26");
 
 		query.addActionListener(new ActionListener() {
 
@@ -160,20 +158,23 @@ public class QueryFrame extends JFrame {
 				}
 
 				if (query.getSelectedItem().equals("Query 4")) {
-					frame2.setSize(250, 230);
+
+					frame2.setSize(250, 150);
 					frame2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-					frame2.setLocation(550, 150);
+					frame2.setLocation(600, 350);
 					pannello2.add(label);
 					pannello2.add(textfield);
 					pannello2.add(bottone);
 					frame2.add(pannello2);
-					frame2.setLocation(550, 150);
 					frame2.setVisible(true);
+					textfield.setText("");
 
 					bottone.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
 							try {
 								frame2.setVisible(false);
+								area.setText("");
+
 								Statement query = con.createStatement();
 								ResultSet result = query
 										.executeQuery("select g.nome,g.cognome\r\n" + "from Giocatore g\r\n"
@@ -185,6 +186,7 @@ public class QueryFrame extends JFrame {
 
 									area.append("-Nome giocatore: \n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
 											+ "\n\n------------------------------\n\n");
+
 								}
 							} catch (Exception e) {
 								area.append("Errore nell'interrogazione");
@@ -264,6 +266,7 @@ public class QueryFrame extends JFrame {
 								.executeQuery("select S.NomeS\r\n" + "from S\r\n" + "where S.sommastip =\r\n" + "(\r\n"
 										+ "select MIN(S.sommastip)\r\n" + "from S\r\n" + ");");
 						while (result.next()) {
+
 							String NomeS = result.getString("S.NomeS");
 
 							area.append("-Nome squadra: \n" + NomeS + "\n\n");
@@ -281,6 +284,7 @@ public class QueryFrame extends JFrame {
 								+ "from Squadra s, Giocatore g\r\n" + "where s.codS=g.codS\r\n"
 								+ "AND g.ruolo= \"Attaccante\"\r\n" + "group by s.nomeS\r\n" + "having numatt > 2");
 						while (result.next()) {
+
 							String NomeS = result.getString("s.NomeS");
 
 							int numatt = result.getInt("numatt");
@@ -325,7 +329,7 @@ public class QueryFrame extends JFrame {
 
 							String Cognome = result.getString("g.Cognome");
 
-							area.append("\n-Nome giocatore: \n\n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
+							area.append("\n-Nome giocatore: \n" + Nome + "\n\n-Cognome giocatore: \n" + Cognome
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -396,7 +400,7 @@ public class QueryFrame extends JFrame {
 
 							String NomeStadio = result.getString("NomeStadio");
 
-							area.append("-Partita \n\n" + Casa + " - " + Trasferta + "\n\n" + "Stadio: \n\n"
+							area.append("-Partita: \n\n" + Casa + " - " + Trasferta + "\n\n" + "-Stadio: \n\n"
 									+ NomeStadio + "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -427,12 +431,12 @@ public class QueryFrame extends JFrame {
 					}
 				}
 
-				if (query.getSelectedItem().equals("Query 23")) {
+				if (query.getSelectedItem().equals("Query 21")) {
 
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery(
-								"SELECT s1.NomeS AS Casa, p.GoalCasa, s2.NomeS AS Trasferta, p.GoalTrasferta, p.Ncartellini, AR.Nome AS NomeArbitro, AR.Cognome AS CognomeArbitro "
+								"SELECT s1.NomeS AS Casa, p.GoalCasa, s2.NomeS AS Trasferta, p.GoalTrasferta, MAX(p.Ncartellini) AS Ncartellini, AR.Nome AS NomeArbitro, AR.Cognome AS CognomeArbitro "
 										+ "FROM Squadra s1, Squadra s2, Partita p " + "INNER JOIN Arbitro AR "
 										+ "ON p.CodAr = AR.CodAr "
 										+ "WHERE s1.CodS = P.CodSCasa AND s2.CodS = p.CodSTrasferta");
@@ -452,9 +456,9 @@ public class QueryFrame extends JFrame {
 
 							int Ncartellini = result.getInt("Ncartellini");
 
-							area.append("-Partita: " + Casa + " " + GoalCasa + " " + "-" + " " + Trasferta + " "
-									+ GoalTrasferta + "\n\n" + "-Arbitro: " + NomeArbitro + " " + "-" + " "
-									+ COGNOMEARBITRO + "\n-N° Cartellini: " + Ncartellini + "\n\n"
+							area.append("-Partita: \n" + Casa + " " + GoalCasa + " " + "-" + " " + Trasferta + " "
+									+ GoalTrasferta + "\n\n" + "-Arbitro: \n" + NomeArbitro + " " + "-" + " "
+									+ COGNOMEARBITRO + "\n\n-N° Cartellini: \n" + Ncartellini + "\n"
 									+ "\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -462,10 +466,37 @@ public class QueryFrame extends JFrame {
 					}
 				}
 
-			}
-		}
+				if (query.getSelectedItem().equals("Query 23")) {
 
-		);
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery(
+								"SELECT s1.NomeS AS Casa, s2.NomeS AS Trasferta, f.Modulo AS ModCasa, f2.Modulo AS ModTrasferta "
+										+ "FROM Squadra s1, Squadra s2, Partita p, Formazione f, Formazione f2 "
+										+ "WHERE s1.CodS = p.CodSCasa AND s2.CodS = p.CodSTrasferta AND f.CodF = p.CodFCasa AND f2.CodF = p.CodFTrasferta");
+						
+
+						while (result.next()) {
+
+							String Casa = result.getString("Casa");
+
+							String Trasferta = result.getString("Trasferta");
+							
+							String ModCasa = result.getString("ModCasa");
+
+							String ModTrasferta = result.getString("ModTrasferta");
+
+							area.append("-Partita: \n" + Casa + " " + ModCasa + " " + "-" + " " + Trasferta + " "
+									+ ModTrasferta + "\n\n" + "\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						e.printStackTrace();
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+			}
+		});
 
 		info.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
@@ -492,9 +523,9 @@ public class QueryFrame extends JFrame {
 						+ "9)  Determinare le squadre che hanno almeno tre giocatori attaccanti.\n"
 						+ "10) Restituire il numero di squadre che hanno partecipato a tutti i tornei.\n"
 						+ "11) Elencare i giocatori che non hanno un numero di maglia e che non sono svincolati.\n"
-						+ "12) Stampa tutte le squadre di serie A.\n" + "13) Elencare le partite dell'anno 2020.\n"
+						+ "12) Stampa tutte le squadre di 'Serie A'.\n" + "13) Elencare le partite dell'anno 2020.\n"
 						+ "14) Elencare una classifica di tutte le squadre dei maggiori campionati europei in ordine di goal fatti.\n"
-						+ "15) Elencare una classifica in base ai punti conseguiti e in base a quale campionato nazionale si scelga.\r\n"
+						+ "15) Elencare le squadre che hanno vinto almeno un partita in trasferta.\n"
 						+ "16) Elencare in quale stadio viene disputata una singola partita.\n"
 						+ "17) Visualizzare i posti disponibili e i posti occupati di uno stadio.\n"
 						+ "18) Elencare tutte le squadre che hanno effettuato un allenamento in una precisa data e in quale luogo.\n"
@@ -502,10 +533,7 @@ public class QueryFrame extends JFrame {
 						+ "20) Elencare tutti i giocatori che hanno subito un infortunio con gravità maggiore rispetto agli altri\n"
 						+ "21) Visualizzare l’arbitro che ha ammonito più giocatori.\n"
 						+ "22) Elencare tutti gli allenatori che hanno un contratto con una durata maggiore di 1 anno.\n"
-						+ "23) Visualizzare il modulo della singola partita disputata.\n"
-						+ "24) Inserire nella Base di dati tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n"
-						+ "25) Modificare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n"
-						+ "26) Cancellare tutti i possibili dati dei singoli giocatori, allenatori, squadre, arbitri, dirigenza, infortuni e allenamenti.\n");
+						+ "23) Visualizzare il modulo della singola partita disputata.\n");
 
 				t.setEditable(false);
 
