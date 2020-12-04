@@ -121,14 +121,24 @@ public class QueryFrame extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery(
-								"select p.codP,p.Data\r\n" + "from partita p\r\n" + "where p.Data > '2020-01-01'\r\n"
-										+ "AND p.Data < '2021-01-01'\r\n" + "ORDER BY p.Data");
+								"select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta,p.Data "
+								+ "from Squadra s1,Squadra s2, Partita p "
+								+ "where s1.codS=p.CodSCasa AND s2.codS=p.CodSTrasferta AND p.Data > '2020-01-01' " 
+								+ "AND p.Data < '2021-01-01' ORDER BY p.Data"
+								);
+								
 						while (result.next()) {
-							String codp = result.getString("p.codP");
+							String Casa = result.getString("Casa");
+							
+							int GoalCasa = result.getInt("p.GoalCasa");
+							
+							String Trasferta = result.getString("Trasferta");
+							
+							int GoalTrasferta = result.getInt("GoalTrasferta");
 
 							String data = result.getString("p.Data");
 
-							area.append("-Codice partita: \n" + codp + "\n\n-Data: \n" + data
+							area.append("-Partita: \n" + Casa + " " + GoalCasa + " " + "-" + " " + Trasferta + " " + GoalTrasferta + "\n\n-Data: \n" + data
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {

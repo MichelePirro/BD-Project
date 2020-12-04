@@ -20,11 +20,9 @@ public class InserisciFormazione extends JFrame {
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField CodF;
-	private JTextField NomeSquadra;
 	private JTextField Modulo;
 	private JTextField Sostituti;
 	private JLabel n1;
-	private JLabel n2;
 	private JLabel n3;
 	private JLabel n4;
 	private JPanel pannello;
@@ -32,11 +30,9 @@ public class InserisciFormazione extends JFrame {
 
 	public InserisciFormazione(Connection con) {
 		CodF = new JTextField(20);
-		NomeSquadra = new JTextField(20);
 		Modulo = new JTextField(20);
 		Sostituti = new JTextField(20);
 		n1 = new JLabel("Inserisci codice formazione:");
-		n2 = new JLabel("Inserisci nome squadra:");
 		n3 = new JLabel("Inserisci modulo:");
 		n4 = new JLabel("Inserisci numero sostituti:");
 		pannello = new JPanel();
@@ -46,9 +42,8 @@ public class InserisciFormazione extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Formazione(CodF,NomeSquadra,Modulo,Sostituti)\n" + "value('"
-									+ CodF.getText() + "','" + NomeSquadra.getText() + "','" + Modulo.getText() + "','"
-									+ Sostituti.getText() + "');");
+							.prepareStatement("INSERT INTO Formazione(CodF,Modulo,Sostituti)\n" + "value('"
+									+ CodF.getText() + "','" + Modulo.getText() + "','" + Sostituti.getText() + "');");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciFormazione.this.setVisible(false);
@@ -60,8 +55,6 @@ public class InserisciFormazione extends JFrame {
 
 		pannello.add(n1);
 		pannello.add(CodF);
-		pannello.add(n2);
-		pannello.add(NomeSquadra);
 		pannello.add(n3);
 		pannello.add(Modulo);
 		pannello.add(n4);

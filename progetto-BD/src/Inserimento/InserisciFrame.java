@@ -124,7 +124,7 @@ public class InserisciFrame extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciPartita(con);
 
-				frame.setSize(288, 410);
+				frame.setSize(288, 650);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -208,7 +208,7 @@ public class InserisciFrame extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciFormazione(con);
 
-				frame.setSize(250, 270);
+				frame.setSize(250, 230);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

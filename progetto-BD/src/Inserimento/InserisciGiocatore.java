@@ -53,7 +53,7 @@ public class InserisciGiocatore extends JFrame
 		n4 = new JLabel("Inserisci ruolo:");
 		n5 = new JLabel("Inserisci stipendio:");
 		n6 = new JLabel("Inserisci numero maglia: *");
-		n7 = new JLabel("Inserisci squadra: *");
+		n7 = new JLabel("Inserisci codice squadra: *");
 		pannello = new JPanel();
 		bottone = new JButton("Invia");
 		

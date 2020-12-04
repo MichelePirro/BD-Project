@@ -314,6 +314,11 @@ public class RemoveFrame extends JFrame {
 					combo1.addItem("GoalCasa");
 					combo1.addItem("GoalTrasferta");
 					combo1.addItem("NGiorn");
+					combo1.addItem("NCartellini");
+					combo1.addItem("CodAr");
+					combo1.addItem("CodST");
+					combo1.addItem("CodFCasa");
+					combo1.addItem("CodFTrasferta");
 
 					elimina4.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
@@ -566,7 +571,6 @@ public class RemoveFrame extends JFrame {
 
 					combo1.addItem("-----");
 					combo1.addItem("CodF");
-					combo1.addItem("NomeSquadra");
 					combo1.addItem("Modulo");
 					combo1.addItem("Sostituti");
 

@@ -39,10 +39,10 @@ public class InserisciDirigenza extends JFrame {
 		NomeDir = new JTextField(20);
 		Durata = new JTextField(20);
 		n1 = new JLabel("Inserisci codice dirigenza:");
-		n2 = new JLabel("Inserisci nome allenatore:");
+		n2 = new JLabel("Inserisci codice allenatore:");
 		n3 = new JLabel("Inserisci sede:");
 		n4 = new JLabel("Inserisci nome dirigenza:");
-		n5 = new JLabel("Inserisci durata contratto:");
+		n5 = new JLabel("Inserisci durata contratto in giorni:");
 		pannello = new JPanel();
 		bottone = new JButton("Invia");
 

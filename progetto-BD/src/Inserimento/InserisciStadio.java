@@ -35,7 +35,7 @@ public class InserisciStadio extends JFrame {
 		CostoBigl = new JTextField(20);
 		PostiDisp = new JTextField(20);
 		PostiOcc = new JTextField(20);
-		n1 = new JLabel("Inserisci codice Stadio:");
+		n1 = new JLabel("Inserisci nome Stadio:");
 		n2 = new JLabel("Inserisci costo biglietto:");
 		n3 = new JLabel("Inserisci posti disponibili:");
 		n4 = new JLabel("Inserisci posti occupati:");
