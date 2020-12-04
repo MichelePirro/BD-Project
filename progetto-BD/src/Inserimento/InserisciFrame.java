@@ -82,7 +82,7 @@ public class InserisciFrame extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciSquadra(con);
 
-				frame.setSize(250, 230);
+				frame.setSize(250, 360);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

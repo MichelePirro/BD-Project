@@ -10,6 +10,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Date;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -48,6 +50,14 @@ public class QueryFrame extends JFrame {
 	private JLabel label;
 	private JPanel pannello2;
 
+	// query 18
+	private JFrame frame3;
+	private JTextField textfield3;
+	private JButton bottone3;
+	private JLabel label3;
+	private JLabel label4;
+	private JPanel pannello3;
+
 	public QueryFrame(Connection con) {
 
 		pannello = new JPanel();
@@ -64,6 +74,15 @@ public class QueryFrame extends JFrame {
 		bottone = new JButton("Invia");
 		label = new JLabel("Inserisci la lettera da cercare");
 		pannello2 = new JPanel();
+
+		// query 18
+		frame3 = new JFrame("Ricerca");
+		textfield3 = new JTextField("", 10);
+		bottone3 = new JButton("Invia");
+		label3 = new JLabel("Inserisci la data da cercare");
+		label4 = new JLabel("(AAAA-MM-GG)");
+
+		pannello3 = new JPanel();
 
 		query.addItem("-----");
 		query.addItem("Query 1");
@@ -98,9 +117,9 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("SELECT a.Nome,a.Cognome,s.NomeS "
-								+ "from Allenatore a, Squadra s, Campionato c " + "where a.CodS=s.CodS "
-								+ "AND s.CodC=c.CodC " + "AND c.NomeC=\"Serie A\"");
+						ResultSet result = query.executeQuery(
+								"SELECT a.Nome,a.Cognome,s.NomeS " + "from Allenatore a, Squadra s, Campionato c "
+										+ "where a.CodS=s.CodS " + "AND s.CodC=c.CodC " + "AND c.NomeC=\"Serie A\"");
 						while (result.next()) {
 							String Nome = result.getString("a.Nome");
 
@@ -122,23 +141,23 @@ public class QueryFrame extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery(
 								"select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta,p.Data "
-								+ "from Squadra s1,Squadra s2, Partita p "
-								+ "where s1.codS=p.CodSCasa AND s2.codS=p.CodSTrasferta AND p.Data > '2020-01-01' " 
-								+ "AND p.Data < '2021-01-01' ORDER BY p.Data"
-								);
-								
+										+ "from Squadra s1,Squadra s2, Partita p "
+										+ "where s1.codS=p.CodSCasa AND s2.codS=p.CodSTrasferta AND p.Data > '2020-01-01' "
+										+ "AND p.Data < '2021-01-01' ORDER BY p.Data");
+
 						while (result.next()) {
 							String Casa = result.getString("Casa");
-							
+
 							int GoalCasa = result.getInt("p.GoalCasa");
-							
+
 							String Trasferta = result.getString("Trasferta");
-							
+
 							int GoalTrasferta = result.getInt("GoalTrasferta");
 
 							String data = result.getString("p.Data");
 
-							area.append("-Partita: \n" + Casa + " " + GoalCasa + " " + "-" + " " + Trasferta + " " + GoalTrasferta + "\n\n-Data: \n" + data
+							area.append("-Partita: \n" + Casa + " " + GoalCasa + " " + "-" + " " + Trasferta + " "
+									+ GoalTrasferta + "\n\n-Data: \n" + data
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -150,9 +169,8 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query
-								.executeQuery("select g.Nome,g.Cognome " + "from Giocatore g, Squadra s "
-										+ "where s.nomeS=\"Napoli\"" + "AND s.codS=g.codS");
+						ResultSet result = query.executeQuery("select g.Nome,g.Cognome "
+								+ "from Giocatore g, Squadra s " + "where s.nomeS=\"Napoli\"" + "AND s.codS=g.codS");
 						while (result.next()) {
 							String Nome = result.getString("g.Nome");
 
@@ -186,9 +204,8 @@ public class QueryFrame extends JFrame {
 								area.setText("");
 
 								Statement query = con.createStatement();
-								ResultSet result = query
-										.executeQuery("select g.nome,g.cognome " + "from Giocatore g "
-												+ "where g.cognome like '" + textfield.getText() + "%'");
+								ResultSet result = query.executeQuery("select g.nome,g.cognome " + "from Giocatore g "
+										+ "where g.cognome like '" + textfield.getText() + "%'");
 								while (result.next()) {
 									String Nome = result.getString("g.Nome");
 
@@ -214,9 +231,8 @@ public class QueryFrame extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("select s.nomeS "
 								+ "from Squadra s, Torneo t, PartecipaT p " + "where s.codS=p.codS "
-								+ "AND p.codT=t.codT " + "AND t.NomeT=\"Champions League\""
-								+ "AND s.codS not in " + "(" + "select s.codS "
-								+ "from Squadra s, Torneo t, PartecipaT p " + "where s.codS=p.codS "
+								+ "AND p.codT=t.codT " + "AND t.NomeT=\"Champions League\"" + "AND s.codS not in " + "("
+								+ "select s.codS " + "from Squadra s, Torneo t, PartecipaT p " + "where s.codS=p.codS "
 								+ "AND p.codT=t.codT " + "AND t.NomeT=\"Europa League\"" + ")");
 						while (result.next()) {
 							String NomeS = result.getString("s.NomeS");
@@ -234,8 +250,8 @@ public class QueryFrame extends JFrame {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("select c.nomeC,COUNT(p.CodSCasa) AS numsquadre "
 								+ "from Partita p, Campionato c, Squadra s " + "where c.codC=s.codC "
-								+ "AND s.codS=p.CodSCasa " + "AND p.goalCasa > 2 "
-								+ "AND p.ngiorn is not null " + "Group By c.nomeC");
+								+ "AND s.codS=p.CodSCasa " + "AND p.goalCasa > 2 " + "AND p.ngiorn is not null "
+								+ "Group By c.nomeC");
 						while (result.next()) {
 							String NomeC = result.getString("c.nomeC");
 
@@ -254,7 +270,7 @@ public class QueryFrame extends JFrame {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("select N.nomeS " + "from N " + "where N.numtor = " + "("
-										+ "select MAX(N.numtor) " + "from N " + ");" + "");
+								+ "select MAX(N.numtor) " + "from N " + ");" + "");
 
 						while (result.next()) {
 							String NomeS = result.getString("N.NomeS");
@@ -271,8 +287,8 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select S.NomeS " + "from S " + "where S.sommastip = " + "("
-										+ "select MIN(S.sommastip) " + "from S " + ");");
+						ResultSet result = query.executeQuery("select S.NomeS " + "from S " + "where S.sommastip = "
+								+ "(" + "select MIN(S.sommastip) " + "from S " + ");");
 						while (result.next()) {
 
 							String NomeS = result.getString("S.NomeS");
@@ -309,10 +325,9 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select count(s.codS) AS numsquadre "
-								+ "from Squadra s " + "where not exists (" +  "select * "
-								+ "from Torneo t " + "where not exists (" + "select * "
-								+ "from Partecipat p " + "where p.codS=s.codS " + "and p.codT=t.codT "
+						ResultSet result = query.executeQuery("select count(s.codS) AS numsquadre " + "from Squadra s "
+								+ "where not exists (" + "select * " + "from Torneo t " + "where not exists ("
+								+ "select * " + "from Partecipat p " + "where p.codS=s.codS " + "and p.codT=t.codT "
 								+ ")" + ");");
 						while (result.next()) {
 							int numsquadre = result.getInt("numsquadre");
@@ -349,8 +364,9 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select s.CodS,s.NomeS " + "from Squadra s " + "where s.CodS like 'ita%'");
-						
+						ResultSet result = query.executeQuery(
+								"select s.CodS,s.NomeS " + "from Squadra s " + "where s.CodS like 'ita%'");
+
 						while (result.next()) {
 							String CodS = result.getString("s.CodS");
 
@@ -368,10 +384,10 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta "
-										+ "from Squadra s1,Squadra s2, Partita p "
-										+ "where s1.codS=p.CodSCasa " + "AND s2.codS=p.CodSTrasferta "
-										+ "AND p.data >'2020-01-01' "
+						ResultSet result = query.executeQuery(
+								"select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta "
+										+ "from Squadra s1,Squadra s2, Partita p " + "where s1.codS=p.CodSCasa "
+										+ "AND s2.codS=p.CodSTrasferta " + "AND p.data >'2020-01-01' "
 										+ "AND p.data <'2021-01-01' ");
 						while (result.next()) {
 							String Casa = result.getString("Casa");
@@ -390,27 +406,52 @@ public class QueryFrame extends JFrame {
 						area.append("Errore nell'interrogazione");
 					}
 				}
-				
-				
+
+				if (query.getSelectedItem().equals("Query 14")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query
+								.executeQuery("SELECT s.NomeS AS Nome, s.GoalFatti AS goalFatti, c.NomeC AS nomeCamp "
+										+ "FROM Squadra s, Campionato c " + "WHERE c.CodC = s.CodC "
+										+ "Order By c.CodC, goalFatti DESC ");
+
+						while (result.next()) {
+
+							String Nome = result.getString("Nome");
+
+							int goalFatti = result.getInt("goalFatti");
+
+							String nomeCamp = result.getString("nomeCamp");
+
+							area.append("-Classifica Campionato: \n\n" + nomeCamp + "\n\n" + Nome + " = " + goalFatti
+									+ " " + "\n\n------------------------------\n\n");
+
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
 				if (query.getSelectedItem().equals("Query 15")) {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("Select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta "
-								+ "From Squadra s1,Squadra s2, Partita p "
-								+ "where s1.codS=p.CodSCasa AND s2.codS=p.CodSTrasferta AND p.GoalCasa < p.GoalTrasferta "
-								);
+						ResultSet result = query.executeQuery(
+								"Select s1.NomeS AS Casa,p.GoalCasa,s2.NomeS AS Trasferta,p.GoalTrasferta "
+										+ "From Squadra s1,Squadra s2, Partita p "
+										+ "where s1.codS=p.CodSCasa AND s2.codS=p.CodSTrasferta AND p.GoalCasa < p.GoalTrasferta ");
 						while (result.next()) {
 							String Casa = result.getString("Casa");
-							
+
 							int goalCasa = result.getInt("p.GoalCasa");
 
 							String Trasferta = result.getString("Trasferta");
 
 							int goalTrasferta = result.getInt("p.GoalTrasferta");
 
-							area.append("-Partita: \n\n" + Casa + " " + goalCasa + " - " + goalTrasferta + " " + Trasferta
-									+ "\n\n------------------------------\n\n");
+							area.append("-Partita: \n\n" + Casa + " " + goalCasa + " - " + goalTrasferta + " "
+									+ Trasferta + "\n\n------------------------------\n\n");
 
 						}
 					} catch (Exception e) {
@@ -422,11 +463,11 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select s1.NomeS AS Casa,s2.NomeS AS Trasferta, CodST AS NomeStadio "
-									    + "from Squadra s1,Squadra s2, Partita p "
-										+ "where s1.codS=p.CodSCasa " + "AND s2.codS=p.CodSTrasferta "
-										);
-						
+						ResultSet result = query
+								.executeQuery("select s1.NomeS AS Casa,s2.NomeS AS Trasferta, CodST AS NomeStadio "
+										+ "from Squadra s1,Squadra s2, Partita p " + "where s1.codS=p.CodSCasa "
+										+ "AND s2.codS=p.CodSTrasferta ");
+
 						while (result.next()) {
 							String Casa = result.getString("Casa");
 
@@ -457,6 +498,122 @@ public class QueryFrame extends JFrame {
 
 							area.append("-Nome Stadio: \n" + CodST + "\n\n-Numero di posti disponibili: \n" + postiDisp
 									+ "\n\n-Numero di posti occupati: \n" + postiOcc
+									+ "\n\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Query 18")) {
+
+					frame3.setSize(250, 150);
+					frame3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+					frame3.setLocation(600, 350);
+					pannello3.add(label3);
+					pannello3.add(label4);
+					pannello3.add(textfield3);
+					pannello3.add(bottone3);
+					frame3.add(pannello3);
+					frame3.setVisible(true);
+					textfield.setText("");
+
+					bottone3.addActionListener(new ActionListener() {
+						public void actionPerformed(ActionEvent ev) {
+							try {
+								frame3.setVisible(false);
+								area.setText("");
+
+								Statement query = con.createStatement();
+								ResultSet result = query.executeQuery("SELECT s.NomeS, a.data, a.Luogo "
+										+ "FROM Squadra s, Allenamento a " + "WHERE s.CodS = a.CodS " + "AND a.data ='"
+										+ textfield3.getText() + "'");
+
+								while (result.next()) {
+									String NomeS = result.getString("s.NomeS");
+
+									Date data = result.getDate("a.data");
+
+									String luogo = result.getString("a.Luogo");
+
+									area.append("-Nome Squadra: \n" + NomeS + "\n\n-Data allenamento: \n" + data
+											+ "\n\n-Luogo allenamento: \n" + luogo
+											+ "\n\n------------------------------\n\n");
+
+								}
+							} catch (Exception e) {
+								area.append("Errore nell'interrogazione");
+							}
+						}
+
+					}
+
+					);
+				}
+
+				if (query.getSelectedItem().equals("Query 19")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery(
+								"SELECT a.Nome AS NomeAr, a.Cognome AS CognomeAr, s1.NomeS AS SquadraCasa, s2.NomeS AS SquadraTrasferta "
+										+ "FROM Arbitro a, Partita p, Squadra s1, Squadra s2 "
+										+ "WHERE a.CodAr = p.CodAr " + "AND p.CodSCasa = s1.CodS "
+										+ "AND p.CodSTrasferta = s2.CodS ");
+
+						while (result.next()) {
+							String SquadraCasa = result.getString("SquadraCasa");
+							String SquadraTrasferta = result.getString("SquadraTrasferta");
+							String NomeAr = result.getString("NomeAr");
+							String CognomeAr = result.getString("CognomeAr");
+
+							area.append("-Partita: \n" + SquadraCasa + " - " + SquadraTrasferta + "\n\n" + "Arbitro: \n"
+									+ "Nome: " + NomeAr + "\n\n" + "Cognome: " + CognomeAr
+									+ "\n\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Query 20")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT g.nome AS Nome, g.cognome AS Cognome, i.tipologia AS Tipologia "
+								+ "FROM Giocatore g, Infortunio i "
+								+ "WHERE g.CodT = i.CodT AND i.gravita = 'alta'"
+								);
+
+						while (result.next()) {
+							String Nome = result.getString("Nome");
+							String Cognome = result.getString("Cognome");
+							String Tipologia = result.getString("Tipologia");
+							
+
+							area.append("-Giocatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n" + "Tipologia: " + Tipologia
+									+ "\n\n------------------------------\n\n");
+						}
+					} catch (Exception e) {
+						area.append("Errore nell'interrogazione");
+					}
+				}
+
+				if (query.getSelectedItem().equals("Query 22")) {
+
+					try {
+						Statement query = con.createStatement();
+						ResultSet result = query.executeQuery("SELECT a.Nome AS Nome, a.cognome AS Cognome, d.Durata AS DurataContratto "
+								+ "FROM Allenatore a, Dirigenza d "
+								+ "WHERE a.CodT = d.CodT AND d.Durata > 365 "
+								);
+
+						while (result.next()) {
+							String Nome = result.getString("Nome");
+							String Cognome = result.getString("Cognome");
+							String DurataContratto = result.getString("DurataContratto");
+							
+							area.append("-Allenatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n" + "Durata Contratto: " + DurataContratto
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -507,14 +664,13 @@ public class QueryFrame extends JFrame {
 								"SELECT s1.NomeS AS Casa, s2.NomeS AS Trasferta, f.Modulo AS ModCasa, f2.Modulo AS ModTrasferta "
 										+ "FROM Squadra s1, Squadra s2, Partita p, Formazione f, Formazione f2 "
 										+ "WHERE s1.CodS = p.CodSCasa AND s2.CodS = p.CodSTrasferta AND f.CodF = p.CodFCasa AND f2.CodF = p.CodFTrasferta");
-						
 
 						while (result.next()) {
 
 							String Casa = result.getString("Casa");
 
 							String Trasferta = result.getString("Trasferta");
-							
+
 							String ModCasa = result.getString("ModCasa");
 
 							String ModTrasferta = result.getString("ModTrasferta");
