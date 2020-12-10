@@ -48,7 +48,7 @@ public class Connetti extends JFrame {
 
 					JFrame frame = new Operazioni((com.mysql.jdbc.Connection) con);
 
-					frame.setSize(380, 312);
+					frame.setSize(380, 320);
 					frame.setTitle("Operazioni");
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setVisible(true);

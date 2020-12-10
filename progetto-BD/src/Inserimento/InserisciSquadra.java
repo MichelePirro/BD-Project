@@ -14,9 +14,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class InserisciSquadra extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8712115776147084860L;
 
 	private JLabel codice;
@@ -31,7 +28,6 @@ public class InserisciSquadra extends JFrame {
 	private JLabel GoalF;
 	private JLabel GoalS;
 	private JLabel NTess;
-
 
 	private JButton bottone;
 	private JPanel pannello;
@@ -56,8 +52,10 @@ public class InserisciSquadra extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				try {
 					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Squadra(CodS,NomeS,CodC,GoalFatti,GoalSubiti,NTesserati)\n" + "value('" + tcodice.getText()
-									+ "','" + tnome.getText() + "','" + tcampionato.getText() +"'," + GoalFatti.getText() +"," + GoalSubiti.getText()+"," + NTesserati.getText() + ");");
+							.prepareStatement("INSERT INTO Squadra(CodS,NomeS,CodC,GoalFatti,GoalSubiti,NTesserati)\n"
+									+ "value('" + tcodice.getText() + "','" + tnome.getText() + "','"
+									+ tcampionato.getText() + "'," + GoalFatti.getText() + "," + GoalSubiti.getText()
+									+ "," + NTesserati.getText() + ");");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciSquadra.this.setVisible(false);

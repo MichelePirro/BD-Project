@@ -12,12 +12,8 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciArbitro extends JFrame
-{
+public class InserisciArbitro extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField CodAr;
@@ -46,10 +42,9 @@ public class InserisciArbitro extends JFrame
 		bottone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Arbitro(CodAr,Nome,Cognome,Tipologia)\n" + "value('"
-									+ CodAr.getText() + "','" + Nome.getText() + "','"
-									+ Cognome.getText() + "','" + Tipologia.getText() + "');");
+					PreparedStatement query = (PreparedStatement) con.prepareStatement(
+							"INSERT INTO Arbitro(CodAr,Nome,Cognome,Tipologia)\n" + "value('" + CodAr.getText() + "','"
+									+ Nome.getText() + "','" + Cognome.getText() + "','" + Tipologia.getText() + "');");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciArbitro.this.setVisible(false);
@@ -68,7 +63,6 @@ public class InserisciArbitro extends JFrame
 		pannello.add(n4);
 		pannello.add(Tipologia);
 		pannello.add(bottone);
-		
 
 		this.add(pannello);
 	}

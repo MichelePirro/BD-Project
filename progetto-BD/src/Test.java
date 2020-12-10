@@ -10,7 +10,7 @@ public class Test {
 		frame.setTitle("Campionato");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setLocation(600, 250);
+		frame.setLocation(500, 200);
 		frame.setResizable(false);
 	}
 

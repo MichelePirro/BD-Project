@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import com.mysql.jdbc.Connection;
 
@@ -30,7 +31,7 @@ public class Operazioni extends JFrame {
 	private JButton inserisci;
 	private JButton modifica;
 	private JButton cancella;
-	private JButton prova;
+	private JButton totale;
 	private JPanel pannello;
 	private ImageIcon img;
 	private JLabel immag;
@@ -41,7 +42,7 @@ public class Operazioni extends JFrame {
 		inserisci = new JButton("Inserisci");
 		modifica = new JButton("Modifica");
 		cancella = new JButton("Cancella");
-		prova = new JButton("Prova");
+		totale = new JButton("Totale");
 		pannello = new JPanel();
 		img = new ImageIcon(getClass().getResource("/campvuoto.png"));
 		immag = new JLabel(img);
@@ -51,7 +52,7 @@ public class Operazioni extends JFrame {
 		pannello.add(modifica);
 		pannello.add(cancella);
 		pannello.add(immag);
-		pannello.add(prova);
+		pannello.add(totale);
 
 		query.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
@@ -61,7 +62,6 @@ public class Operazioni extends JFrame {
 				frame.setSize(400, 570);
 				frame.setTitle("Query");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 				frame.setVisible(true);
 				frame.setLocation(550, 150);
 				frame.setResizable(false);
@@ -76,7 +76,6 @@ public class Operazioni extends JFrame {
 				frame.setSize(650, 300);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 				frame.setVisible(true);
 				frame.setLocation(600, 250);
 				frame.setResizable(false);
@@ -91,10 +90,8 @@ public class Operazioni extends JFrame {
 				frame.setSize(320, 280);
 				frame.setTitle("Modifica");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 				frame.setVisible(true);
 				frame.setLocation(600, 250);
-
 				frame.setResizable(false);
 			}
 		});
@@ -107,26 +104,18 @@ public class Operazioni extends JFrame {
 				frame.setSize(310, 250);
 				frame.setTitle("Cancella");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
 				frame.setVisible(true);
 				frame.setLocation(600, 250);
-
 				frame.setResizable(false);
 			}
 		});
 
-		prova.addActionListener(new ActionListener() {
+		totale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 
-				JFrame frame = new QueryProva(con);
+				JPanel panel = new QueryProva(con);
+				panel.show();
 
-				frame.setSize(400, 570);
-				frame.setTitle("Query di prova");
-				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-				frame.setVisible(true);
-				frame.setLocation(540, 150);
-				frame.setResizable(false);
 			}
 		});
 

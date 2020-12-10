@@ -13,14 +13,10 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciGiocatore extends JFrame
-{
+public class InserisciGiocatore extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
-	
+
 	private JTextField CodT;
 	private JTextField Nome;
 	private JTextField Cognome;
@@ -38,8 +34,7 @@ public class InserisciGiocatore extends JFrame
 	private JPanel pannello;
 	private JButton bottone;
 
-	public InserisciGiocatore(Connection con)
-	{
+	public InserisciGiocatore(Connection con) {
 		CodT = new JTextField(20);
 		Nome = new JTextField(20);
 		Cognome = new JTextField(20);
@@ -56,74 +51,59 @@ public class InserisciGiocatore extends JFrame
 		n7 = new JLabel("Inserisci codice squadra: *");
 		pannello = new JPanel();
 		bottone = new JButton("Invia");
-		
-		
-		bottone.addActionListener(
-									new ActionListener()
-									{
-										public void actionPerformed(ActionEvent ev)
-										{
-											try 
-											{
-												if(numero.getText().equals("") && !squadra.getText().equals(""))
-												{
-												PreparedStatement query = (PreparedStatement) con.prepareStatement
-														(
-																"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n"+
-																"value('"+CodT.getText()+"','"+Nome.getText()+"','"+Cognome.getText()+"','"+Ruolo.getText()+"','"+Stipendio.getText()+"',null,'"+squadra.getText()+"');"							
-														);
-												query.executeUpdate();
-												JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-												InserisciGiocatore.this.setVisible(false);
-												}
-												
-												if(!numero.getText().equals("") && squadra.getText().equals(""))
-												{
-												PreparedStatement query = (PreparedStatement) con.prepareStatement
-														(
-																"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n"+
-																"value('"+CodT.getText()+"','"+Nome.getText()+"','"+Cognome.getText()+"','"+Ruolo.getText()+"','"+Stipendio.getText()+"','"+numero.getText()+"',null);"							
-														);
-												query.executeUpdate();
-												JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-												InserisciGiocatore.this.setVisible(false);
-												}
-												
-												if(numero.getText().equals("") && squadra.getText().equals(""))
-												{
-												PreparedStatement query = (PreparedStatement) con.prepareStatement
-														(
-																"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n"+
-																"value('"+CodT.getText()+"','"+Nome.getText()+"','"+Cognome.getText()+"','"+Ruolo.getText()+"','"+Stipendio.getText()+"',null,null);"							
-														);
-												query.executeUpdate();
-												JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-												InserisciGiocatore.this.setVisible(false);
-												}
-												
-												if(!numero.getText().equals("") && !squadra.getText().equals(""))
-												{
-												PreparedStatement query = (PreparedStatement) con.prepareStatement
-														(
-																"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n"+
-																"value('"+CodT.getText()+"','"+Nome.getText()+"','"+Cognome.getText()+"','"+Ruolo.getText()+"','"+Stipendio.getText()+"','"+numero.getText()+"','"+squadra.getText()+"');"							
-														);
-												query.executeUpdate();
-												JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
-												InserisciGiocatore.this.setVisible(false);
-												}
 
-
-											}
-											catch (Exception e)
-											{
-												JOptionPane.showMessageDialog(null, "Errore nell'inserimento, riprova.");
-											}
+		bottone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ev) {
+				try {
+					if (numero.getText().equals("") && !squadra.getText().equals("")) {
+						PreparedStatement query = (PreparedStatement) con.prepareStatement(
+								"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n" + "value('"
+										+ CodT.getText() + "','" + Nome.getText() + "','" + Cognome.getText() + "','"
+										+ Ruolo.getText() + "','" + Stipendio.getText() + "',null,'" + squadra.getText()
+										+ "');");
+						query.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
+						InserisciGiocatore.this.setVisible(false);
 					}
+
+					if (!numero.getText().equals("") && squadra.getText().equals("")) {
+						PreparedStatement query = (PreparedStatement) con.prepareStatement(
+								"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n" + "value('"
+										+ CodT.getText() + "','" + Nome.getText() + "','" + Cognome.getText() + "','"
+										+ Ruolo.getText() + "','" + Stipendio.getText() + "','" + numero.getText()
+										+ "',null);");
+						query.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
+						InserisciGiocatore.this.setVisible(false);
+					}
+
+					if (numero.getText().equals("") && squadra.getText().equals("")) {
+						PreparedStatement query = (PreparedStatement) con.prepareStatement(
+								"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n" + "value('"
+										+ CodT.getText() + "','" + Nome.getText() + "','" + Cognome.getText() + "','"
+										+ Ruolo.getText() + "','" + Stipendio.getText() + "',null,null);");
+						query.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
+						InserisciGiocatore.this.setVisible(false);
+					}
+
+					if (!numero.getText().equals("") && !squadra.getText().equals("")) {
+						PreparedStatement query = (PreparedStatement) con.prepareStatement(
+								"INSERT INTO Giocatore(CodT,Nome,Cognome,Ruolo,Stipendio,NumMaglia,CodS)\n" + "value('"
+										+ CodT.getText() + "','" + Nome.getText() + "','" + Cognome.getText() + "','"
+										+ Ruolo.getText() + "','" + Stipendio.getText() + "','" + numero.getText()
+										+ "','" + squadra.getText() + "');");
+						query.executeUpdate();
+						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
+						InserisciGiocatore.this.setVisible(false);
+					}
+
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "Errore nell'inserimento, riprova.");
 				}
-				);
-		
-		
+			}
+		});
+
 		pannello.add(n1);
 		pannello.add(CodT);
 		pannello.add(n2);
@@ -139,7 +119,7 @@ public class InserisciGiocatore extends JFrame
 		pannello.add(n7);
 		pannello.add(squadra);
 		pannello.add(bottone);
-		
+
 		this.add(pannello);
 	}
 }

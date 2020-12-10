@@ -12,12 +12,8 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciInfortunio extends JFrame
-{
+public class InserisciInfortunio extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField CodInf;
@@ -50,10 +46,10 @@ public class InserisciInfortunio extends JFrame
 		bottone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Infortunio(CodInf,CodT,Tipologia,Gravita,MedicoCurante)\n" + "value('"
-									+ CodInf.getText() + "','" + CodT.getText() + "','"
-									+ Tipologia.getText() + "','" + Gravita.getText() + "','" + MedicoCurante.getText() + "');");
+					PreparedStatement query = (PreparedStatement) con.prepareStatement(
+							"INSERT INTO Infortunio(CodInf,CodT,Tipologia,Gravita,MedicoCurante)\n" + "value('"
+									+ CodInf.getText() + "','" + CodT.getText() + "','" + Tipologia.getText() + "','"
+									+ Gravita.getText() + "','" + MedicoCurante.getText() + "');");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciInfortunio.this.setVisible(false);
@@ -74,7 +70,6 @@ public class InserisciInfortunio extends JFrame
 		pannello.add(n5);
 		pannello.add(MedicoCurante);
 		pannello.add(bottone);
-		
 
 		this.add(pannello);
 	}

@@ -14,9 +14,6 @@ import com.mysql.jdbc.Connection;
 
 public class InserisciFrame extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6365727298703739561L;
 
 	private JLabel text;
@@ -263,5 +260,6 @@ public class InserisciFrame extends JFrame {
 		this.add(pannello, BorderLayout.NORTH);
 		this.add(pannello1, BorderLayout.CENTER);
 		this.add(pannello2, BorderLayout.PAGE_END);
+
 	}
 }

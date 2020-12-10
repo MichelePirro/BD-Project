@@ -12,12 +12,8 @@ import javax.swing.JTextField;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
-public class InserisciAllenamento extends JFrame
-{
+public class InserisciAllenamento extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField CodAll;
@@ -46,10 +42,9 @@ public class InserisciAllenamento extends JFrame
 		bottone.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				try {
-					PreparedStatement query = (PreparedStatement) con
-							.prepareStatement("INSERT INTO Allenamento(CodAll,Luogo,Data,CodS)\n" + "value('"
-									+ CodAll.getText() + "','" + Luogo.getText() + "','"
-									+ Data.getText() + "','" + CodS.getText() + "');");
+					PreparedStatement query = (PreparedStatement) con.prepareStatement(
+							"INSERT INTO Allenamento(CodAll,Luogo,Data,CodS)\n" + "value('" + CodAll.getText() + "','"
+									+ Luogo.getText() + "','" + Data.getText() + "','" + CodS.getText() + "');");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciAllenamento.this.setVisible(false);
@@ -68,7 +63,6 @@ public class InserisciAllenamento extends JFrame
 		pannello.add(n4);
 		pannello.add(CodS);
 		pannello.add(bottone);
-		
 
 		this.add(pannello);
 	}

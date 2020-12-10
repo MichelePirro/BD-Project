@@ -1,38 +1,79 @@
 package Query;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.Connection;
 
-public class QueryProva extends JFrame {
+public class QueryProva extends JPanel {
+	// dimensioni predefinite del pannello
+	private static final int PREF_W = 600;
+	private static final int PREF_H = 400;
 
-	/**
-	 * Query di prova
-	 */
-	private static final long serialVersionUID = 3347886131317848991L;
-
+	// variabili
 	private JComboBox<String> query;
 	private JTextArea area;
-	private JPanel pannello;
-	private JScrollPane pane;
+	private JTable table;
+	private JScrollPane scroll;
+	private JPanel panel;
+	public static Connection con;
 
+	// imposta la grandezza del pannello per adattare il frame
+	@Override
+	public Dimension getPreferredSize() {
+		return new Dimension(PREF_W, PREF_H);
+	}
+
+	// costruttore
 	public QueryProva(Connection con) {
-		pannello = new JPanel();
+
+		// connessione
+		QueryProva.con = con;
+		// tabella
+		table = new JTable();
+		// text area
 		area = new JTextArea(30, 30);
-		pane = new JScrollPane(area);
+		area.setEditable(false);
+		area.setVisible(true);
+		// lista query
 		query = new JComboBox<String>();
 
+		initQueries();
+		// sotto-pannello
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(1, 2));
+		panel.add(table);
+		scroll = new JScrollPane(table);
+		panel.add(scroll);
+		// pannello principale
+		this.setLayout(new BorderLayout());
+		this.add(query, BorderLayout.NORTH);
+		this.add(panel);
+	}
+
+	private void initQueries() {
 		query.addItem("-----");
 		query.addItem("Squadra");
 		query.addItem("Giocatore");
@@ -49,312 +90,161 @@ public class QueryProva extends JFrame {
 		query.addItem("Iscrizioni tornei");
 
 		query.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent ev) {
 				area.setText("");
-
 				if (query.getSelectedItem().equals("Squadra")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Squadra;");
-						area.append("CODS ----- NOMES ----- CODC\n\n");
-						while (result.next()) {
-							String CodS = result.getString("CodS");
-
-							String NomeS = result.getString("NomeS");
-
-							String CodC = result.getString("CodC");
-
-							area.append(CodS + " ----- " + "" + NomeS + " ----- " + CodC + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Giocatore")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Giocatore;");
-						area.append(
-								"CODT ----- NOME ----- COGNOME ----- RUOLO ----- STIPENDIO ----- NUM.MAGLIA ----- CODS\n\n");
-						while (result.next()) {
-							String CodT = result.getString("CodT");
-
-							String Nome = result.getString("Nome");
-
-							String Cognome = result.getString("Cognome");
-
-							String Ruolo = result.getString("Ruolo");
-
-							double Stipendio = result.getDouble("Stipendio");
-
-							int nummaglia = result.getInt("NumMaglia");
-
-							String CodS = result.getString("CodS");
-
-							area.append(CodT + " ----- " + Nome + " ----- " + Cognome + " ----- " + Ruolo + " ----- "
-									+ Stipendio + " ----- " + nummaglia + " ----- " + CodS + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Allenatore")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Allenatore;");
-						area.append("CODT ----- CODS ----- NOME ----- COGNOME ----- STIPENDIO\n\n");
-						while (result.next()) {
-							String CodT = result.getString("CodT");
-
-							String CodS = result.getString("CodS");
-
-							String Nome = result.getString("Nome");
-
-							String Cognome = result.getString("Cognome");
-
-							double Stipendio = result.getDouble("Stipendio");
-
-							area.append(CodT + " ----- " + CodS + " ----- " + Nome + " ----- " + Cognome + " ----- "
-									+ Stipendio + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Partita")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Partita;");
-						area.append(
-								"CODP ----- CODSCASA ----- CODSTRASFERTA ----- DATA ----- GOALCASA ----- GOALTRASFERTA ----- N.GIORN ----- CODAR -----CODST -----CODF\n\n");
-						while (result.next()) {
-							String CodP = result.getString("CodP");
 
-							String CodSCasa = result.getString("CodSCasa");
-
-							String CodSTrasferta = result.getString("CodSTrasferta");
-
-							String data = result.getString("Data");
-
-							int golc = result.getInt("GoalCasa");
-
-							int golt = result.getInt("GoalTrasferta");
-
-							int ngiorn = result.getInt("NGiorn");
-
-							String CodAr = result.getString("CodAr");
-
-							String CodST = result.getString("CodST");
-
-							String CodF = result.getString("CodF");
-
-							area.append(CodP + " ----- " + CodSCasa + " ----- " + CodSTrasferta + " ----- " + data
-									+ " ----- " + golc + " ----- " + golt + " ----- " + ngiorn + " ----- " + CodAr
-									+ " ----- " + CodST + " ----- " + CodF + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Torneo")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Torneo;");
-						area.append("CODT ----- NOMET\n\n");
-						while (result.next()) {
-							String CodT = result.getString("CodT");
-
-							String NomeT = result.getString("NomeT");
-
-							area.append(CodT + " ----- " + NomeT + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Arbitro")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Arbitro;");
-						area.append("CODAR ----- NOME ----- COGNOME ----- TIPOLOGIA \n\n");
-						while (result.next()) {
-
-							String CodAr = result.getString("CodAr");
-
-							String Nome = result.getString("Nome");
-
-							String Cognome = result.getString("Cognome");
-
-							String Tipologia = result.getString("Tipologia");
-
-							area.append(
-									CodAr + " ----- " + Nome + " ----- " + Cognome + " ----- " + Tipologia + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Campionato")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Campionato;");
-						area.append("CODC ----- NOMEC\n\n");
-						while (result.next()) {
-							String CodC = result.getString("CodC");
-
-							String NomeC = result.getString("NomeC");
-
-							area.append(CodC + " ----- " + NomeC + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Stadio")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Stadio;");
-						area.append("COST ----- COSTOBIGLIETTI ----- POSTIDISPONIBILI ----- POSTIOCCUPATI\n\n");
-						while (result.next()) {
-							String CodST = result.getString("CodST");
-
-							String CostoBigl = result.getString("CostoBigl");
-
-							String PostiDisp = result.getString("PostiDisp");
-
-							String PostiOcc = result.getString("PostiOcc");
-
-							area.append(CodST + " ----- " + CostoBigl + " ----- " + PostiDisp + " ----- " + PostiOcc
-									+ "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Dirigenza")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Dirigenza;");
-						area.append("CODDIR -----CODT ----- SEDE ----- NOMEDIR ----- DURATA\n\n");
-						while (result.next()) {
-							String CodDir = result.getString("CodDir");
-
-							String CodT = result.getString("CodT");
-
-							String Sede = result.getString("Sede");
-
-							String NomeDir = result.getString("NomeDir");
-
-							int Durata = result.getInt("Durata");
-
-							area.append(CodDir + " ----- " + CodT + " ----- " + Sede + " ----- " + NomeDir + " ----- "
-									+ Durata + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Formazione")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Formazione;");
-						area.append("CODF ----- NOMESQUADRA ----- MODULO ----- SOSTITUTI\n\n");
-						while (result.next()) {
-							String CodF = result.getString("CodF");
-
-							String NomeSquadra = result.getString("NomeSquadra");
-
-							String Modulo = result.getString("Modulo");
-
-							int Sostituti = result.getInt("Sostituti");
-
-							area.append(CodF + " ----- " + NomeSquadra + " ----- " + Modulo + " ----- " + Sostituti
-									+ "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Infortunio")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Infortunio;");
-						area.append("CODINF ----- CODT ----- TIPOLOGIA ----- GRAVITA ----- MEDICOCURANTE\n\n");
-						while (result.next()) {
-							String CodInf = result.getString("CodInf");
-
-							String CodT = result.getString("CodT");
-
-							String Tipologia = result.getString("Tipologia");
-
-							String Gravita = result.getString("Gravita");
-
-							String MedicoCurante = result.getString("MedicoCurante");
-
-							area.append(CodInf + " ----- " + CodT + " ----- " + Tipologia + " ----- " + Gravita
-									+ " ----- " + MedicoCurante + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Allenamento")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Allenamento;");
-						area.append("CODALL ----- LUOGO ----- DATA ----- CODS\n\n");
-						while (result.next()) {
-							String CodAll = result.getString("CodAll");
-
-							String Luogo = result.getString("Luogo");
-
-							Date Data = result.getDate("Data");
-
-							String CodS = result.getString("CodS");
-
-							area.append(CodAll + " ----- " + Luogo + " ----- " + Data + " ----- " + CodS + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
 				}
 
 				if (query.getSelectedItem().equals("Iscrizioni tornei")) {
-
+					table.removeAll();
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from PartecipaT;");
-						area.append("CODS ----- CODT\n\n");
-						while (result.next()) {
-							String CodS = result.getString("CodS");
-
-							String CodT = result.getString("CodT");
-
-							area.append(CodS + " ----- " + CodT + "\n\n");
-						}
+						while (result.next())
+							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
 					}
@@ -362,10 +252,44 @@ public class QueryProva extends JFrame {
 
 			}
 		});
+	}
 
-		pannello.add(query);
-		area.setEditable(false);
-		this.add(pannello, BorderLayout.NORTH);
-		this.add(pane);
+	private void resultSetToTable(ResultSet result, JTable table) throws SQLException {
+		DefaultTableModel tableModel = new DefaultTableModel();
+		ResultSetMetaData metaData = result.getMetaData();
+
+		// intestazioni colonne
+		int columnCount = metaData.getColumnCount();
+		for (int columnIndex = 1; columnIndex <= columnCount; columnIndex++) {
+			tableModel.addColumn(metaData.getColumnLabel(columnIndex));
+		}
+
+		Object[] row = new Object[columnCount];
+		// dati tabella
+		while (result.next()) {
+			for (int i = 0; i < columnCount; i++)
+				row[i] = result.getObject(i + 1);
+
+			tableModel.addRow(row);
+		}
+
+		table.setModel(tableModel);
+		table.setEnabled(false);
+
+	}
+
+	private static void createAndShowGui() {
+		QueryProva query = new QueryProva(con);
+
+		JFrame frame = new JFrame("Query Totale");
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.add(query);
+		frame.setLocation(540, 150);
+		frame.pack();
+		frame.setVisible(true);
+	}
+
+	public void show() {
+		SwingUtilities.invokeLater(() -> createAndShowGui());
 	}
 }

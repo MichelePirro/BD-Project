@@ -74,8 +74,8 @@ public class ModificaFrame extends JFrame {
 		n4 = new JLabel("Inserisci il codice attuale del torneo: ");
 
 		combo.addItem("-----");
-		combo.addItem("Squadra");
 		combo.addItem("Giocatore");
+		combo.addItem("Squadra");
 		combo.addItem("Allenatore");
 		combo.addItem("Partita");
 		combo.addItem("Torneo");
@@ -86,7 +86,6 @@ public class ModificaFrame extends JFrame {
 		combo.addItem("Formazione");
 		combo.addItem("Infortunio");
 		combo.addItem("Allenamento");
-
 		combo.addItem("Iscrizione torneo");
 
 		n1.setVisible(false);
@@ -217,7 +216,6 @@ public class ModificaFrame extends JFrame {
 					combo1.addItem("GoalSubiti");
 					combo1.addItem("NTesserati");
 
-
 					modifica2.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
 							try {
@@ -306,7 +304,6 @@ public class ModificaFrame extends JFrame {
 					combo1.addItem("CodST");
 					combo1.addItem("CodFCasa");
 					combo1.addItem("CodFTrasferta");
-
 
 					modifica4.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {

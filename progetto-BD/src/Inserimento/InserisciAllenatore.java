@@ -14,9 +14,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class InserisciAllenatore extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField CodT;

@@ -15,9 +15,6 @@ import com.mysql.jdbc.PreparedStatement;
 
 public class InserisciPartita extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 4871388245355308251L;
 
 	private JTextField codp;
@@ -87,20 +84,19 @@ public class InserisciPartita extends JFrame {
 										+ codtrasferta.getText() + "','" + data.getText() + "'," + goalcasa.getText()
 										+ "," + goaltrasferta.getText() + ",null" + "," + nCartellini.getText() + ",'"
 										+ codAr.getText() + "','" + CodSt.getText() + "','" + CodF1.getText() + "','"
-										+ CodF2.getText() +"');");
+										+ CodF2.getText() + "');");
 						query.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 						InserisciPartita.this.setVisible(false);
-						
+
 					} else {
 						PreparedStatement query = (PreparedStatement) con.prepareStatement(
 								"INSERT INTO Partita(CodP,CodSCasa,CodSTrasferta,Data,GoalCasa,GoalTrasferta,NGiorn,NCartellini,CodAr,CodST,CodFCasa,CodFTrasferta)"
 										+ "value('" + codp.getText() + "','" + codcasa.getText() + "','"
 										+ codtrasferta.getText() + "','" + data.getText() + "'," + goalcasa.getText()
-										+ "," + goaltrasferta.getText()+ "," + ngior.getText() + "," + nCartellini.getText()
-										+ ",'" + codAr.getText() + "','" + CodSt.getText() + "','" + CodF1.getText()
-										+ "','" + CodF2.getText() + "');"
-										);
+										+ "," + goaltrasferta.getText() + "," + ngior.getText() + ","
+										+ nCartellini.getText() + ",'" + codAr.getText() + "','" + CodSt.getText()
+										+ "','" + CodF1.getText() + "','" + CodF2.getText() + "');");
 						query.executeUpdate();
 						JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 						InserisciPartita.this.setVisible(false);

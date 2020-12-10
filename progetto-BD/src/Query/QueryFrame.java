@@ -516,7 +516,7 @@ public class QueryFrame extends JFrame {
 					pannello3.add(bottone3);
 					frame3.add(pannello3);
 					frame3.setVisible(true);
-					textfield.setText("");
+					textfield3.setText("");
 
 					bottone3.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {
@@ -580,19 +580,18 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("SELECT g.nome AS Nome, g.cognome AS Cognome, i.tipologia AS Tipologia "
-								+ "FROM Giocatore g, Infortunio i "
-								+ "WHERE g.CodT = i.CodT AND i.gravita = 'alta'"
-								);
+						ResultSet result = query
+								.executeQuery("SELECT g.nome AS Nome, g.cognome AS Cognome, i.tipologia AS Tipologia "
+										+ "FROM Giocatore g, Infortunio i "
+										+ "WHERE g.CodT = i.CodT AND i.gravita = 'alta'");
 
 						while (result.next()) {
 							String Nome = result.getString("Nome");
 							String Cognome = result.getString("Cognome");
 							String Tipologia = result.getString("Tipologia");
-							
 
-							area.append("-Giocatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n" + "Tipologia: " + Tipologia
-									+ "\n\n------------------------------\n\n");
+							area.append("-Giocatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n"
+									+ "Tipologia: " + Tipologia + "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -603,17 +602,18 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("SELECT a.Nome AS Nome, a.cognome AS Cognome, d.Durata AS DurataContratto "
-								+ "FROM Allenatore a, Dirigenza d "
-								+ "WHERE a.CodT = d.CodT AND d.Durata > 365 "
-								);
+						ResultSet result = query.executeQuery(
+								"SELECT a.Nome AS Nome, a.cognome AS Cognome, d.Durata AS DurataContratto "
+										+ "FROM Allenatore a, Dirigenza d "
+										+ "WHERE a.CodT = d.CodT AND d.Durata > 365 ");
 
 						while (result.next()) {
 							String Nome = result.getString("Nome");
 							String Cognome = result.getString("Cognome");
 							String DurataContratto = result.getString("DurataContratto");
-							
-							area.append("-Allenatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n" + "Durata Contratto: " + DurataContratto
+
+							area.append("-Allenatore: \n" + "Nome: " + Nome + "\n\n" + "Cognome: " + Cognome + "\n\n"
+									+ "Durata Contratto: " + DurataContratto
 									+ "\n\n------------------------------\n\n");
 						}
 					} catch (Exception e) {
@@ -697,15 +697,14 @@ public class QueryFrame extends JFrame {
 				JTextArea display = new JTextArea(1600, 5800);
 				JScrollPane scroll = new JScrollPane(display);
 				scroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
-				TextArea t = new TextArea();
+				TextArea listaQuery = new TextArea();
 
 				// Lista query nel pannello info
-				t.setText("1)  Elencare il nome di tutti gli allenatori che allenano in 'Serie A'.\n"
+				listaQuery.setText("1)  Elencare il nome di tutti gli allenatori che allenano in 'Serie A'.\n"
 						+ "2)  Elencare tutte le partite dell'anno 2020 ordinate per data.\n"
 						+ "3)  Elencare tutti i giocatori della squadra 'Napoli'.\n"
 						+ "4)  Elencare i giocatori il cui cognome inizia con una lettera presa in input.\n"
-						+ "5)  Elencare le squadre che hanno partecipato al torneo \"Champions League\" ma non 'Europa League'.\n"
+						+ "5)  Elencare le squadre che hanno partecipato al torneo 'Champions League' ma non 'Europa League'.\n"
 						+ "6)  Per ogni campionato, contare le squadre che hanno effettuato partite in casa, in cui hanno segnato almeno tre gol.\n"
 						+ "7)  Determinare la squadra che ha partecipato a più tornei.\n"
 						+ "8)  Determinare la squadra di 'Serie A' in cui la somma degli stipendi dei giocatori è la più bassa.\n"
@@ -723,16 +722,15 @@ public class QueryFrame extends JFrame {
 						+ "21) Visualizzare l’arbitro che ha ammonito più giocatori.\n"
 						+ "22) Elencare tutti gli allenatori che hanno un contratto con una durata maggiore di 1 anno.\n"
 						+ "23) Visualizzare il modulo della singola partita disputata.\n");
-
-				t.setEditable(false);
-
+				listaQuery.setFont(font);
+				listaQuery.setEditable(false);
 				// Add Textarea in to middle panel
 				middlePanel.add(scroll);
+
 				middlePanel.add(display);
 
-				// My code
 				frame.add(middlePanel);
-				frame.add(t);
+				frame.add(listaQuery);
 				frame.pack();
 				frame.setLocation(800, 250);
 				frame.setSize(710, 320);
@@ -745,7 +743,7 @@ public class QueryFrame extends JFrame {
 			}
 
 		});
-
+		pane.setAlignmentY(getHeight());
 		pannello.add(query);
 		pannello.add(info);
 		area.setEditable(false);
