@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.Date;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -282,6 +283,7 @@ public class QueryProva extends JPanel {
 		QueryProva query = new QueryProva(con);
 
 		JFrame frame = new JFrame("Query Totale");
+		
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.add(query);
 		frame.setLocation(540, 150);

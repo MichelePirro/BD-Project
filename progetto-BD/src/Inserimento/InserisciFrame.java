@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,6 +80,8 @@ public class InserisciFrame extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciSquadra(con);
 
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 360);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -92,7 +95,8 @@ public class InserisciFrame extends JFrame {
 		giocatore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciGiocatore(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 420);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -106,7 +110,8 @@ public class InserisciFrame extends JFrame {
 		allenatore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciAllenatore(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 320);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -120,7 +125,8 @@ public class InserisciFrame extends JFrame {
 		partita.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciPartita(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(288, 650);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -134,7 +140,8 @@ public class InserisciFrame extends JFrame {
 		torneo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciTorneo(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(288, 190);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -148,7 +155,8 @@ public class InserisciFrame extends JFrame {
 		arbitro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciArbitro(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 270);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -162,7 +170,8 @@ public class InserisciFrame extends JFrame {
 		campionato.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciCampionato(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(288, 190);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -176,7 +185,8 @@ public class InserisciFrame extends JFrame {
 		stadio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciStadio(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 270);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -190,7 +200,8 @@ public class InserisciFrame extends JFrame {
 		dirigenza.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciDirigenza(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 320);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -204,7 +215,8 @@ public class InserisciFrame extends JFrame {
 		formazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciFormazione(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 230);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -218,7 +230,8 @@ public class InserisciFrame extends JFrame {
 		infortunio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciInfortunio(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 320);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -232,7 +245,8 @@ public class InserisciFrame extends JFrame {
 		allenamento.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new InserisciAllenamento(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(250, 280);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -246,7 +260,8 @@ public class InserisciFrame extends JFrame {
 		iscrizione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				JFrame frame = new IscrizioneTorneo(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(290, 190);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

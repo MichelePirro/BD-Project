@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -62,6 +63,8 @@ public class QueryFrame extends JFrame {
 
 		pannello = new JPanel();
 		frame = new JFrame();
+		ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+		frame.setIconImage(immagine.getImage());
 		area = new JTextArea(30, 30);
 		pane = new JScrollPane(area);
 		query = new JComboBox<String>();
@@ -70,6 +73,8 @@ public class QueryFrame extends JFrame {
 
 		// query 4
 		frame2 = new JFrame("Ricerca");
+		ImageIcon immagine2 = new ImageIcon(getClass().getResource("/pallone.jpg"));
+		frame2.setIconImage(immagine2.getImage());
 		textfield = new JTextField("", 10);
 		bottone = new JButton("Invia");
 		label = new JLabel("Inserisci la lettera da cercare");
@@ -77,6 +82,8 @@ public class QueryFrame extends JFrame {
 
 		// query 18
 		frame3 = new JFrame("Ricerca");
+		ImageIcon immagine3 = new ImageIcon(getClass().getResource("/pallone.jpg"));
+		frame3.setIconImage(immagine3.getImage());
 		textfield3 = new JTextField("", 10);
 		bottone3 = new JButton("Invia");
 		label3 = new JLabel("Inserisci la data da cercare");

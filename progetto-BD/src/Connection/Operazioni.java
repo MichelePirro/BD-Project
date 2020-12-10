@@ -58,7 +58,8 @@ public class Operazioni extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 
 				JFrame frame = new QueryFrame(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(400, 570);
 				frame.setTitle("Query");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -72,7 +73,8 @@ public class Operazioni extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 
 				JFrame frame = new InserisciFrame(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(650, 300);
 				frame.setTitle("Inserimento");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -86,7 +88,8 @@ public class Operazioni extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 
 				JFrame frame = new ModificaFrame(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(320, 280);
 				frame.setTitle("Modifica");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -100,7 +103,8 @@ public class Operazioni extends JFrame {
 			public void actionPerformed(ActionEvent ev) {
 
 				JFrame frame = new RemoveFrame(con);
-
+				ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+				frame.setIconImage(immagine.getImage());
 				frame.setSize(310, 250);
 				frame.setTitle("Cancella");
 				frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

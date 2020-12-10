@@ -47,6 +47,8 @@ public class Connetti extends JFrame {
 					JOptionPane.showMessageDialog(null, "Connessione effettuata.");
 
 					JFrame frame = new Operazioni((com.mysql.jdbc.Connection) con);
+					ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
+					frame.setIconImage(immagine.getImage());
 
 					frame.setSize(380, 320);
 					frame.setTitle("Operazioni");
@@ -54,7 +56,7 @@ public class Connetti extends JFrame {
 					frame.setVisible(true);
 					frame.setLocation(600, 250);
 					frame.setResizable(false);
-
+					
 					Connetti.this.setVisible(false);
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, "Connessione fallita.");
