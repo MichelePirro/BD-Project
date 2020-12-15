@@ -18,7 +18,7 @@ import Cancellazione.RemoveFrame;
 import Inserimento.InserisciFrame;
 import Modifica.ModificaFrame;
 import Query.QueryFrame;
-import Query.QueryProva;
+import Query.QueryTotale;
 
 public class Operazioni extends JFrame {
 
@@ -117,7 +117,7 @@ public class Operazioni extends JFrame {
 		totale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 
-				JPanel panel = new QueryProva(con);
+				JPanel panel = new QueryTotale(con);
 				panel.show();
 
 			}

@@ -28,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import com.mysql.jdbc.Connection;
 
-public class QueryProva extends JPanel {
+public class QueryTotale extends JPanel {
 	// dimensioni predefinite del pannello
 	private static final int PREF_W = 600;
 	private static final int PREF_H = 400;
@@ -48,10 +48,10 @@ public class QueryProva extends JPanel {
 	}
 
 	// costruttore
-	public QueryProva(Connection con) {
+	public QueryTotale(Connection con) {
 
 		// connessione
-		QueryProva.con = con;
+		QueryTotale.con = con;
 		// tabella
 		table = new JTable();
 		// text area
@@ -89,6 +89,15 @@ public class QueryProva extends JPanel {
 		query.addItem("Infortunio");
 		query.addItem("Allenamento");
 		query.addItem("Iscrizioni tornei");
+		
+		/* In ogni try dovrebbe esserci un while(reuslt.next) 
+		 * per prendere i dati ma dato che nella funzione resultSetToTable 
+		 * gia è presente un while(result.next) che prende i dati dal DB e li
+		 * aggiunge alla JTable chiamata table non bisogna metterlo qui nel try 
+		 * altrimenti si perde il primo record (riga) del DB ma tutti gli altri
+		 * vengono visualizzati facendo così anche la prima riga viene visualizzata
+		 * :-)
+		 */
 
 		query.addActionListener(new ActionListener() {
 			@Override
@@ -99,7 +108,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Squadra;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -111,7 +119,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Giocatore;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -123,7 +130,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Allenatore;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -135,8 +141,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Partita;");
-
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -148,7 +152,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Torneo;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -160,7 +163,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Arbitro;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -172,7 +174,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Campionato;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -184,7 +185,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Stadio;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -196,7 +196,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Dirigenza;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -208,7 +207,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Formazione;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -220,7 +218,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Infortunio;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -232,7 +229,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from Allenamento;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -244,7 +240,6 @@ public class QueryProva extends JPanel {
 					try {
 						Statement query = con.createStatement();
 						ResultSet result = query.executeQuery("SELECT * from PartecipaT;");
-						while (result.next())
 							resultSetToTable(result, table);
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -258,6 +253,7 @@ public class QueryProva extends JPanel {
 	private void resultSetToTable(ResultSet result, JTable table) throws SQLException {
 		DefaultTableModel tableModel = new DefaultTableModel();
 		ResultSetMetaData metaData = result.getMetaData();
+		
 
 		// intestazioni colonne
 		int columnCount = metaData.getColumnCount();
@@ -268,22 +264,23 @@ public class QueryProva extends JPanel {
 		Object[] row = new Object[columnCount];
 		// dati tabella
 		while (result.next()) {
-			for (int i = 0; i < columnCount; i++)
-				row[i] = result.getObject(i + 1);
+			for (int i=0; i < columnCount; i++)
+				row[i] = result.getObject(i+1);
+				
 
 			tableModel.addRow(row);
 		}
 
 		table.setModel(tableModel);
 		table.setEnabled(false);
-
+		table.getTableHeader().setReorderingAllowed(false);
 	}
 
 	private static void createAndShowGui() {
-		QueryProva query = new QueryProva(con);
-
+		QueryTotale query = new QueryTotale(con);
 		JFrame frame = new JFrame("Query Totale");
-		
+		ImageIcon immagine = new ImageIcon(QueryTotale.class.getResource("/pallone.jpg"));
+		frame.setIconImage(immagine.getImage());
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.add(query);
 		frame.setLocation(540, 150);
