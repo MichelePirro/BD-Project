@@ -10,11 +10,11 @@ public class Test {
 		JFrame frame = new Connetti();
 		ImageIcon immagine = new ImageIcon(Test.class.getResource("/pallone.jpg"));
 		frame.setIconImage(immagine.getImage());
-		frame.setSize(680, 600);
+		frame.setSize(750, 555);
 		frame.setTitle("Campionato");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
-		frame.setLocation(500, 200);
+		frame.setLocation(400,150 );
 		frame.setResizable(false);
 	}
 

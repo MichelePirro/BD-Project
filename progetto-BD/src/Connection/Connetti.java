@@ -29,10 +29,10 @@ public class Connetti extends JFrame {
 		connetti = new JButton("Connetti");
 		connect = new JLabel("Connetti al Database.   >>>");
 		pannello = new JPanel();
-		immagine = new ImageIcon(getClass().getResource("/fotobuona2.jpg"));
+		immagine = new ImageIcon(getClass().getResource("/fotobuona2.1.jpg"));
 
 		img = new JLabel(immagine);
-		font = new Font("Arial", Font.BOLD, 15);
+		font = new Font("Arial", Font.BOLD, 17);
 
 		connetti.addActionListener(new ActionListener() {
 			@Override
