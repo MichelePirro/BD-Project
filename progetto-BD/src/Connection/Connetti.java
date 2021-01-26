@@ -50,7 +50,7 @@ public class Connetti extends JFrame {
 					ImageIcon immagine = new ImageIcon(getClass().getResource("/pallone.jpg"));
 					frame.setIconImage(immagine.getImage());
 
-					frame.setSize(380, 320);
+					frame.setSize(500, 465);
 					frame.setTitle("Operazioni");
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					frame.setVisible(true);

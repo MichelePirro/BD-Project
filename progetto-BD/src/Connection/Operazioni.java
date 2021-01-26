@@ -44,7 +44,7 @@ public class Operazioni extends JFrame {
 		cancella = new JButton("Cancella");
 		totale = new JButton("Totale");
 		pannello = new JPanel();
-		img = new ImageIcon(getClass().getResource("/campvuoto.png"));
+		img = new ImageIcon(getClass().getResource("/Operazioni.jpg"));
 		immag = new JLabel(img);
 
 		pannello.add(query);
