@@ -214,7 +214,6 @@ public class ModificaFrame extends JFrame {
 					combo1.addItem("CodC");
 					combo1.addItem("GoalFatti");
 					combo1.addItem("GoalSubiti");
-					combo1.addItem("NTesserati");
 
 					modifica2.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent ev) {

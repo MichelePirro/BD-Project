@@ -24,11 +24,8 @@ public class InserisciSquadra extends JFrame {
 	private JTextField tcampionato;
 	private JTextField GoalFatti;
 	private JTextField GoalSubiti;
-	private JTextField NTesserati;
 	private JLabel GoalF;
 	private JLabel GoalS;
-	private JLabel NTess;
-
 	private JButton bottone;
 	private JPanel pannello;
 
@@ -43,8 +40,6 @@ public class InserisciSquadra extends JFrame {
 		GoalFatti = new JTextField(20);
 		GoalS = new JLabel("Inserisci i goal subiti:");
 		GoalSubiti = new JTextField(20);
-		NTess = new JLabel("Inserisci numero tesserati:");
-		NTesserati = new JTextField(20);
 		bottone = new JButton("Invia");
 		pannello = new JPanel();
 
@@ -54,8 +49,7 @@ public class InserisciSquadra extends JFrame {
 					PreparedStatement query = (PreparedStatement) con
 							.prepareStatement("INSERT INTO Squadra(CodS,NomeS,CodC,GoalFatti,GoalSubiti,NTesserati)\n"
 									+ "value('" + tcodice.getText() + "','" + tnome.getText() + "','"
-									+ tcampionato.getText() + "'," + GoalFatti.getText() + "," + GoalSubiti.getText()
-									+ "," + NTesserati.getText() + ");");
+									+ tcampionato.getText() + "'," + GoalFatti.getText() + "," + GoalSubiti.getText() + ");");
 					query.executeUpdate();
 					JOptionPane.showMessageDialog(null, "Inserimento effettuato con successo.");
 					InserisciSquadra.this.setVisible(false);
@@ -75,8 +69,6 @@ public class InserisciSquadra extends JFrame {
 		pannello.add(GoalFatti);
 		pannello.add(GoalS);
 		pannello.add(GoalSubiti);
-		pannello.add(NTess);
-		pannello.add(NTesserati);
 		pannello.add(bottone);
 
 		this.add(pannello, BorderLayout.CENTER);
