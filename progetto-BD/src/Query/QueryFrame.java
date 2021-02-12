@@ -10,7 +10,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +30,7 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 
+import Inserimento.InserisciPartita;
 import Inserimento.InserisciSquadra;
 
 public class QueryFrame extends JFrame {
@@ -69,13 +72,18 @@ public class QueryFrame extends JFrame {
 	// query 24
 	private JFrame frame5;
 	private JTextField textfield5;
-	private JButton bottone5;
+	private JButton bottoneInvio;
 	private JLabel label7;
 	private JLabel label8;
 	private JPanel pannello5;
 	private JComboBox<String> Campionati;
 	private JTextArea textarea;
 	private JComboBox<String> Squadre;
+	private JComboBox<String> Squadre2;
+	private JLabel ScrittaCasa;
+	private JLabel ScrittaOspite;
+
+	private JButton bottone6;
 
 	public QueryFrame(Connection con) {
 
@@ -119,17 +127,19 @@ public class QueryFrame extends JFrame {
 		pannello4 = new JPanel();
 
 		// query 24
-		frame5 = new JFrame("Ricerca");
+		frame5 = new JFrame("Gioca");
 		ImageIcon immagine5 = new ImageIcon(getClass().getResource("/pallone.jpg"));
 		frame5.setIconImage(immagine4.getImage());
 		textfield5 = new JTextField("", 10);
-		bottone5 = new JButton("Invia");
-		label7 = new JLabel("Scegli Campionato");
-		label8 = new JLabel("ciao");
+		bottoneInvio = new JButton("Invia");
+		ScrittaCasa = new JLabel("Seleziona squadra casa: ");
+		ScrittaOspite = new JLabel("Seleziona squadra ospite: ");
 		Campionati = new JComboBox<String>();
 		textarea = new JTextArea();
 		pannello5 = new JPanel();
 		Squadre = new JComboBox<String>();
+		Squadre2 = new JComboBox<String>();
+		bottone6 = new JButton("Seleziona");
 
 		query.addItem("-----");
 		query.addItem("Query 1");
@@ -163,9 +173,6 @@ public class QueryFrame extends JFrame {
 		Campionati.addItem("Liga BBVA");
 		Campionati.addItem("Bundesliga");
 		Campionati.addItem("Eredivisie");
-		Campionati.addItem("Primera Liga");
-		
-		
 
 		query.addActionListener(new ActionListener() {
 
@@ -777,26 +784,33 @@ public class QueryFrame extends JFrame {
 				}
 				if (query.getSelectedItem().equals("Query 24")) {
 
-					frame5.setSize(350, 150);
+					frame5.setSize(230, 200);
 					frame5.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame5.setLocation(600, 350);
 					pannello5.add(Campionati);
+					pannello5.add(bottoneInvio);
+					pannello5.add(ScrittaCasa);
 					pannello5.add(Squadre);
-					pannello5.add(bottone5);
+					pannello5.add(ScrittaOspite);
+					pannello5.add(Squadre2);
+					pannello5.add(bottone6);
 					textarea.setVisible(true);
 					pannello5.add(textarea);
 					frame5.add(pannello5);
 					frame5.setVisible(true);
 
-					bottone5.addActionListener(new ActionListener() {
+					bottoneInvio.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent ev) {
 							try {
-								//frame5.setVisible(false);
+								// frame5.setVisible(false);
 								area.setText("");
+
 								if (Campionati.getSelectedItem().equals("Serie A")) {
+									area.setText("");
 									Squadre.removeAllItems();
-									
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Serie A'");
@@ -805,18 +819,17 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
-										
-										
-										Squadre.getSelectedItem();
+										Squadre2.addItem(NomeS);
+
 									}
-									
-									System.out.println(Squadre.getSelectedItem());
-									
+
 								}
-								
-							  if (Campionati.getSelectedItem().equals("Premier League")) {
-								  
-								  Squadre.removeAllItems();
+
+								if (Campionati.getSelectedItem().equals("Premier League")) {
+									area.setText("");
+									Squadre.removeAllItems();
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT * " + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Premier League'");
@@ -825,13 +838,16 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
+										Squadre2.addItem(NomeS);
 
 									}
-									
 								}
-							  
-							  if (Campionati.getSelectedItem().equals("Ligue 1")) {
+
+								if (Campionati.getSelectedItem().equals("Ligue 1")) {
+									area.setText("");
 									Squadre.removeAllItems();
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Ligue 1'");
@@ -840,12 +856,17 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
+										Squadre2.addItem(NomeS);
+
 									}
-									
+
 								}
-							  
-							  if (Campionati.getSelectedItem().equals("Liga BBVA")) {
+
+								if (Campionati.getSelectedItem().equals("Liga BBVA")) {
+									area.setText("");
 									Squadre.removeAllItems();
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Liga BBVA'");
@@ -854,12 +875,17 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
+										Squadre2.addItem(NomeS);
+
 									}
-									
+
 								}
-							  
-							  if (Campionati.getSelectedItem().equals("Bundesliga")) {
+
+								if (Campionati.getSelectedItem().equals("Bundesliga")) {
+									area.setText("");
 									Squadre.removeAllItems();
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Bundesliga'");
@@ -868,12 +894,17 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
+										Squadre2.addItem(NomeS);
+
 									}
-									
+
 								}
-							  
-							  if (Campionati.getSelectedItem().equals("Eredivisie")) {
+
+								if (Campionati.getSelectedItem().equals("Eredivisie")) {
+									area.setText("");
 									Squadre.removeAllItems();
+									Squadre2.removeAllItems();
+
 									Statement query = con.createStatement();
 									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
 											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Eredivisie'");
@@ -882,26 +913,85 @@ public class QueryFrame extends JFrame {
 
 										String NomeS = result.getString("NomeS");
 										Squadre.addItem(NomeS);
-									}
-									
-								}
-							  
-							  if (Campionati.getSelectedItem().equals("Premera Liga")) {
-									Squadre.removeAllItems();
-									Statement query = con.createStatement();
-									ResultSet result = query.executeQuery("SELECT *" + "FROM Campionato c, Squadra s "
-											+ "WHERE c.CodC = s.CodC " + "AND c.NomeC = 'Premera Liga'");
+										Squadre2.addItem(NomeS);
 
-									while (result.next()) {
-
-										String NomeS = result.getString("NomeS");
-										Squadre.addItem(NomeS);
 									}
-									
+
 								}
-							  
-								
-								
+
+
+								bottone6.addActionListener(new ActionListener() {
+
+									public void actionPerformed(ActionEvent ev) {
+
+										if (Squadre.getSelectedItem() == Squadre2.getSelectedItem()) {
+											JOptionPane.showMessageDialog(null,
+													"Errore," + "selezionare due squadre diverse.");
+										} else {
+											Random generatore = new Random();
+
+											String casa = (String) Squadre.getSelectedItem();
+											String ospite = (String) Squadre2.getSelectedItem();
+
+											ArrayList<String> formazioni = new ArrayList<String>();
+											formazioni.add("4-3-3");
+											formazioni.add("3-5-2");
+											formazioni.add("3-4-3");
+											formazioni.add("5-4-1");
+											formazioni.add("4-4-2");
+											formazioni.add("5-3-2");
+											formazioni.add("4-4-2");
+											formazioni.add("3-4-3");
+											formazioni.add("4-3-3");
+											formazioni.add("3-5-2");
+
+											ArrayList<String> stadi = new ArrayList<String>();
+											stadi.add("Camp Nou");
+											stadi.add("Croke Park");
+											stadi.add("Signal Iduna Park");
+											stadi.add("Stade de France");
+											stadi.add("Stadio Diego Armando Maradona");
+											stadi.add("Stadio Giuseppe Meazza");
+											stadi.add("Stadio San Paolo");
+											stadi.add("Stadio Santiago Bernabéu");
+											stadi.add("Twickenham Stadium");
+											stadi.add("Wembley Stadium");
+
+											ArrayList<String> arbitri = new ArrayList<String>();
+											arbitri.add("Filippo Meli");
+											arbitri.add("Marco Guida");
+											arbitri.add("Georgi Kabakov");
+											arbitri.add("William Colum");
+											arbitri.add("Alessandro Giallatini");
+											arbitri.add("Hessel Steegstra");
+											arbitri.add("Cyril Gringore");
+											arbitri.add("Anthony Taylor");
+											arbitri.add("Felix Brych");
+											arbitri.add("Carlos Del Cerro Grande");
+											arbitri.add("Daniele Orsato");
+											arbitri.add("Gianluca Rochi");
+											arbitri.add("Daniel Siebert");
+											arbitri.add("Srdan Jovanovic");
+
+											int numero = 16;
+											for (int i = 16; i <= 1000; i++) {
+												numero++;
+											}
+
+											area.setText("CodP" + generatore.nextInt(numero + 16) + "\n " + casa + ": "
+													+ generatore.nextInt(5) + " " + "-" + " " + ospite + ": "
+													+ generatore.nextInt(5) + "\n" + "N° Giornata: "
+													+ generatore.nextInt(36) + "\n" + "N° Cartellini: "
+													+ generatore.nextInt(22) + "\n" + "Arbitro: "
+													+ arbitri.get(generatore.nextInt(14)) + "\n" + "Stadio: "
+													+ stadi.get(generatore.nextInt(10)) + "\n" + "Formazione Casa: "
+													+ formazioni.get(generatore.nextInt(10)) + "\n"
+													+ "Formazione Ospite: " + formazioni.get(generatore.nextInt(10)));
+
+										}
+									}
+								});
+
 							} catch (Exception e) {
 								System.out.println("Errore");
 
@@ -914,7 +1004,6 @@ public class QueryFrame extends JFrame {
 			}
 
 		});
-
 		info.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent ev) {
