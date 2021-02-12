@@ -178,6 +178,7 @@ public class RemoveFrame extends JFrame {
 					combo1.addItem("CodS");
 					combo1.addItem("NomeS");
 					combo1.addItem("CodC");
+					combo1.addItem("Punti");
 					combo1.addItem("GoalFatti");
 					combo1.addItem("GoalSubiti");
 
