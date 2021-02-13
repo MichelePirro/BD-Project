@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Date;
@@ -919,7 +920,6 @@ public class QueryFrame extends JFrame {
 
 								}
 
-
 								bottone6.addActionListener(new ActionListener() {
 
 									public void actionPerformed(ActionEvent ev) {
@@ -934,59 +934,121 @@ public class QueryFrame extends JFrame {
 											String ospite = (String) Squadre2.getSelectedItem();
 
 											ArrayList<String> formazioni = new ArrayList<String>();
-											formazioni.add("4-3-3");
-											formazioni.add("3-5-2");
-											formazioni.add("3-4-3");
-											formazioni.add("5-4-1");
-											formazioni.add("4-4-2");
-											formazioni.add("5-3-2");
-											formazioni.add("4-4-2");
-											formazioni.add("3-4-3");
-											formazioni.add("4-3-3");
-											formazioni.add("3-5-2");
 
 											ArrayList<String> stadi = new ArrayList<String>();
-											stadi.add("Camp Nou");
-											stadi.add("Croke Park");
-											stadi.add("Signal Iduna Park");
-											stadi.add("Stade de France");
-											stadi.add("Stadio Diego Armando Maradona");
-											stadi.add("Stadio Giuseppe Meazza");
-											stadi.add("Stadio San Paolo");
-											stadi.add("Stadio Santiago Bernabéu");
-											stadi.add("Twickenham Stadium");
-											stadi.add("Wembley Stadium");
 
 											ArrayList<String> arbitri = new ArrayList<String>();
-											arbitri.add("Filippo Meli");
-											arbitri.add("Marco Guida");
-											arbitri.add("Georgi Kabakov");
-											arbitri.add("William Colum");
-											arbitri.add("Alessandro Giallatini");
-											arbitri.add("Hessel Steegstra");
-											arbitri.add("Cyril Gringore");
-											arbitri.add("Anthony Taylor");
-											arbitri.add("Felix Brych");
-											arbitri.add("Carlos Del Cerro Grande");
-											arbitri.add("Daniele Orsato");
-											arbitri.add("Gianluca Rochi");
-											arbitri.add("Daniel Siebert");
-											arbitri.add("Srdan Jovanovic");
 
-											int numero = 16;
-											for (int i = 16; i <= 1000; i++) {
-												numero++;
+											try {
+												// query per l'arbitro per l'insert
+												Statement queryarbitro = con.createStatement();
+												ResultSet resultarbitro = queryarbitro
+														.executeQuery("Select a.CodAr " + "From Arbitro a ");
+
+												while (resultarbitro.next()) {
+													arbitri.add(resultarbitro.getString("CodAr"));
+
+												}
+
+											} catch (Exception e) {
+												System.out.println("Errore arbitro");
 											}
 
-											area.setText("CodP" + generatore.nextInt(numero + 16) + "\n " + casa + ": "
-													+ generatore.nextInt(5) + " " + "-" + " " + ospite + ": "
-													+ generatore.nextInt(5) + "\n" + "N° Giornata: "
-													+ generatore.nextInt(36) + "\n" + "N° Cartellini: "
-													+ generatore.nextInt(22) + "\n" + "Arbitro: "
-													+ arbitri.get(generatore.nextInt(14)) + "\n" + "Stadio: "
-													+ stadi.get(generatore.nextInt(10)) + "\n" + "Formazione Casa: "
-													+ formazioni.get(generatore.nextInt(10)) + "\n"
-													+ "Formazione Ospite: " + formazioni.get(generatore.nextInt(10)));
+											try {
+												// query per la formazione per l'insert
+												Statement queryform = con.createStatement();
+												ResultSet resultform = queryform
+														.executeQuery("SELECT CodF " + "FROM formazione ");
+
+												while (resultform.next()) {
+													formazioni.add(resultform.getString("CodF"));
+												}
+
+											} catch (Exception e) {
+												System.out.println("Errore formazione");
+											}
+
+											try {
+												// query per stadi per l'insert
+												Statement querystadio = con.createStatement();
+												ResultSet resultstadio = querystadio
+														.executeQuery("SELECT s.CodST " + "FROM Stadio s ");
+
+												while (resultstadio.next()) {
+													stadi.add(resultstadio.getString("CodST"));
+
+												}
+
+											} catch (Exception e) {
+												System.out.println("Errore arbitro");
+											}
+
+											int numero = 16;
+											for (int i = 16; i <= 100000; i++) {
+												numero++;
+											}
+											// generatori numeri per l'insert
+											int codprandom = generatore.nextInt(numero + 16);
+											int goalcasarandom = generatore.nextInt(5);
+											int goaltrasfertarandom = generatore.nextInt(5);
+											int giornatarandom = generatore.nextInt(36) + 1;
+											int cartellinirandom = generatore.nextInt(22);
+											String arbitrorandom = arbitri.get(generatore.nextInt(arbitri.size()));
+											String stadiorandom = stadi.get(generatore.nextInt(stadi.size()));
+											String formcasarandom = formazioni
+													.get(generatore.nextInt(formazioni.size()));
+											String formospiterandom = formazioni
+													.get(generatore.nextInt(formazioni.size()));
+
+											// stampa nell jtextarea della partita generata
+											area.setText("part" + codprandom + "\n " + casa + ": " + goalcasarandom
+													+ " " + "-" + " " + ospite + ": " + goaltrasfertarandom + "\n"
+													+ "N° Giornata: " + giornatarandom + "\n" + "N° Cartellini: "
+													+ cartellinirandom + "\n" + "Arbitro: " + arbitrorandom + "\n"
+													+ "Stadio: " + stadiorandom + "\n" + "Formazione Casa: "
+													+ formcasarandom + "\n" + "Formazione Ospite: " + formospiterandom);
+											try {
+
+												// query per codice casa per l'insert
+												String CodS = null;
+												Statement querycasa = con.createStatement();
+												ResultSet resultcasa = querycasa.executeQuery(
+														"SELECT s.CodS " + "FROM Squadra s " + "WHERE s.NomeS = '"
+																+ Squadre.getSelectedItem() + "'");
+
+												while (resultcasa.next()) {
+
+													CodS = resultcasa.getString("CodS");
+												}
+
+												// query per codice ospite per l'insert
+												String CodS2 = null;
+												Statement queryospite = con.createStatement();
+												ResultSet resultospite = queryospite.executeQuery(
+														"SELECT s.CodS " + "FROM Squadra s " + "WHERE s.NomeS = '"
+																+ Squadre2.getSelectedItem() + "'");
+
+												while (resultospite.next()) {
+
+													CodS2 = resultospite.getString("CodS");
+												}
+
+												PreparedStatement queryinsert = (PreparedStatement) con
+														.prepareStatement(
+																"INSERT INTO Partita(CodP,CodSCasa,CodSTrasferta,Data,GoalCasa,GoalTrasferta,NGiorn,NCartellini,CodAr,CodST,CodFCasa,CodFTrasferta)"
+																		+ "value('part" + codprandom + "','" + CodS
+																		+ "','" + CodS2 + "','2020-01-15',"
+																		+ goalcasarandom + "," + goaltrasfertarandom
+																		+ "," + giornatarandom + "," + cartellinirandom
+																		+ ",'" + arbitrorandom + "','" + stadiorandom
+																		+ "','" + formcasarandom + "','"
+																		+ formospiterandom + "');");
+												queryinsert.executeUpdate();
+
+											} catch (Exception e) {
+
+												System.out.println("Errore");
+											}
 
 										}
 									}
