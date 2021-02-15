@@ -381,18 +381,22 @@ public class QueryFrame extends JFrame {
 								area.setText("");
 
 								Statement query = con.createStatement();
-								ResultSet result = query.executeQuery("select NomeS " + "from Squadra "
-										+ "where CodS in ( " + "select p.CodSCasa "
-										+ "from Squadra s inner join Partita p on s.CodS=p.CodSCasa inner join Formazione f on  p.CodFCasa=f.CodF "
-										+ "where f.Modulo = '" + textfield4.getText() + "'" + " group by (p.CodSCasa)) "
-										+ " or " + "(" + "select p.CodSTrasferta "
-										+ "from  Squadra s inner join Partita p on s.CodS=p.CodSTrasferta inner join Formazione f on p.CodFTrasferta=f.CodF "
-										+ "where f.Modulo = '" + textfield4.getText() + "'"
-										+ "group by (p.CodSTrasferta))");
+								ResultSet result = query.executeQuery("SELECT s.nomeS AS NomeSquadra "
+										+ "from Squadra s "
+										+ "where CodS in ( "
+										      + "select p.CodSCasa "
+										      + "from Squadra s inner join Partita p on s.CodS=p.CodSCasa inner join Formazione f on  p.CodFCasa=f.CodF "
+										    + "where f.Modulo ='"+textfield4.getText()+"'"
+										      + "group by p.CodSCasa "
+										      +") or CodS in ( "
+										+ "select p.CodSTrasferta "
+										+ "from Squadra s inner join Partita p on s.CodS=p.CodSTrasferta inner join Formazione f on p.CodFTrasferta=f.CodF "
+										+ "where f.Modulo ='"+textfield4.getText()+"'"
+										+ "group by p.CodSTrasferta )");
 
 								while (result.next()) {
 
-									String NomeS = result.getString("NomeS");
+									String NomeS = result.getString("NomeSquadra");
 
 									area.append("-Nome squadra: \n" + NomeS + "\n\n");
 								}
@@ -401,9 +405,7 @@ public class QueryFrame extends JFrame {
 								e.printStackTrace();
 							}
 						}
-					}
-
-					);
+					});
 				}
 
 				if (query.getSelectedItem().equals("Query 9")) {
