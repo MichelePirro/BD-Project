@@ -72,10 +72,6 @@ public class QueryFrame extends JFrame {
 	private JPanel pannello3;
 	// query 24
 	private JFrame frame5;
-	private JTextField textfield5;
-	private JButton bottoneInvio;
-	private JLabel label7;
-	private JLabel label8;
 	private JPanel pannello5;
 	private JComboBox<String> Campionati;
 	private JTextArea textarea;
@@ -83,8 +79,13 @@ public class QueryFrame extends JFrame {
 	private JComboBox<String> Squadre2;
 	private JLabel ScrittaCasa;
 	private JLabel ScrittaOspite;
-
 	private JButton bottone6;
+
+	private JButton classifica;
+	// claasifica
+	private JFrame frame6;
+	private JPanel pannello6;
+	private JTextArea area2;
 
 	public QueryFrame(Connection con) {
 
@@ -130,9 +131,7 @@ public class QueryFrame extends JFrame {
 		// query 24
 		frame5 = new JFrame("Gioca");
 		ImageIcon immagine5 = new ImageIcon(getClass().getResource("/pallone.jpg"));
-		frame5.setIconImage(immagine4.getImage());
-		textfield5 = new JTextField("", 10);
-		bottoneInvio = new JButton("Invia");
+		frame5.setIconImage(immagine5.getImage());
 		ScrittaCasa = new JLabel("Seleziona squadra casa: ");
 		ScrittaOspite = new JLabel("Seleziona squadra ospite: ");
 		Campionati = new JComboBox<String>();
@@ -141,6 +140,13 @@ public class QueryFrame extends JFrame {
 		Squadre = new JComboBox<String>();
 		Squadre2 = new JComboBox<String>();
 		bottone6 = new JButton("Seleziona");
+
+		classifica = new JButton("Classifica");
+		frame6 = new JFrame("Classifica");
+		ImageIcon immagine6 = new ImageIcon(getClass().getResource("/pallone.jpg"));
+		frame6.setIconImage(immagine6.getImage());
+		pannello6 = new JPanel();
+		area2 = new JTextArea(30, 30);
 
 		query.addItem("-----");
 		query.addItem("Query 1");
@@ -378,11 +384,11 @@ public class QueryFrame extends JFrame {
 								ResultSet result = query.executeQuery("select NomeS " + "from Squadra "
 										+ "where CodS in ( " + "select p.CodSCasa "
 										+ "from Squadra s inner join Partita p on s.CodS=p.CodSCasa inner join Formazione f on  p.CodFCasa=f.CodF "
-										+ "where f.Modulo = '" + textfield4.getText() + "'" + " group by p.CodSCasa "
-										+ ")" + " or " + "(" + "select p.CodSTrasferta "
+										+ "where f.Modulo = '" + textfield4.getText() + "'" + " group by (p.CodSCasa)) "
+										+ " or " + "(" + "select p.CodSTrasferta "
 										+ "from  Squadra s inner join Partita p on s.CodS=p.CodSTrasferta inner join Formazione f on p.CodFTrasferta=f.CodF "
 										+ "where f.Modulo = '" + textfield4.getText() + "'"
-										+ " group by p.CodSTrasferta);");
+										+ "group by (p.CodSTrasferta))");
 
 								while (result.next()) {
 
@@ -392,6 +398,7 @@ public class QueryFrame extends JFrame {
 								}
 							} catch (Exception e) {
 								area.append("Errore nell'interrogazione");
+								e.printStackTrace();
 							}
 						}
 					}
@@ -424,15 +431,17 @@ public class QueryFrame extends JFrame {
 
 					try {
 						Statement query = con.createStatement();
-						ResultSet result = query.executeQuery("select count(s.codS) AS numsquadre " + "from Squadra s "
-								+ "where not exists (" + "select * " + "from Torneo t " + "where not exists ("
-								+ "select * " + "from Partecipat p " + "where p.codS=s.codS " + "and p.codT=t.codT "
-								+ ")" + ");");
-						while (result.next()) {
-							int numsquadre = result.getInt("numsquadre");
+						ResultSet result = query.executeQuery(
+								"SELECT s.NomeS, count(t.NomeT) AS Ntornei " + "FROM Squadra s, Torneo t, partecipat p "
+										+ "WHERE t.CodT = p.CodT AND s.CodS = p.CodS AND s.codS IN ( "
+										+ "SELECT s.codS " + "FROM Squadra s, partecipat p " + "WHERE s.CodS = p.CodS "
+										+ "GROUP BY (s.codS) " + "HAVING count(p.CodT) > 2 ) " + "GROUP BY (s.NomeS)");
 
-							area.append(
-									"-Numero di squadre: \n" + numsquadre + "\n\n------------------------------\n\n");
+						while (result.next()) {
+							String nomeSquadra = result.getString("s.NomeS");
+							int numTornei = result.getInt("NTornei");
+
+							area.append("- " + nomeSquadra + ": " + numTornei + "\n\n");
 						}
 					} catch (Exception e) {
 						area.append("Errore nell'interrogazione");
@@ -789,7 +798,6 @@ public class QueryFrame extends JFrame {
 					frame5.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 					frame5.setLocation(600, 350);
 					pannello5.add(Campionati);
-					pannello5.add(bottoneInvio);
 					pannello5.add(ScrittaCasa);
 					pannello5.add(Squadre);
 					pannello5.add(ScrittaOspite);
@@ -800,7 +808,7 @@ public class QueryFrame extends JFrame {
 					frame5.add(pannello5);
 					frame5.setVisible(true);
 
-					bottoneInvio.addActionListener(new ActionListener() {
+					Campionati.addActionListener(new ActionListener() {
 
 						public void actionPerformed(ActionEvent ev) {
 							try {
@@ -1086,10 +1094,10 @@ public class QueryFrame extends JFrame {
 						+ "4)  Elencare i giocatori il cui cognome inizia con una lettera presa in input.\n"
 						+ "5)  Elencare le squadre che hanno partecipato al torneo 'Champions League' ma non 'Europa League'.\n"
 						+ "6)  Per ogni campionato, contare le squadre che hanno effettuato partite in casa, in cui hanno segnato almeno tre gol.\n"
-						+ "7)  Determinare tutti gli arbitri che hanno arbitrato più di 3 partite in cui la squadra di casa ha vinto.\n"
+						+ "7)  Determinare tutti gli arbitri che hanno arbitrato meno di 3 partite in cui la squadra di casa ha vinto.\n"
 						+ "8)  Restituire il nome di un squadra con un determinato modulo preso in input.\n"
 						+ "9)  Determinare le squadre che hanno almeno tre giocatori attaccanti.\n"
-						+ "10) Restituire il numero di squadre che hanno partecipato a tutti i tornei.\n"
+						+ "10) Restituire l'elenco delle squadre che hanno partecipato ad almeno 2 tornei.\n"
 						+ "11) Elencare i giocatori che non hanno un numero di maglia e che non sono svincolati.\n"
 						+ "12) Stampa tutte le squadre di 'Serie A'.\n" + "13) Elencare le partite dell'anno 2020.\n"
 						+ "14) Elencare una classifica di tutte le squadre dei maggiori campionati europei in ordine di goal fatti.\n"
@@ -1101,7 +1109,9 @@ public class QueryFrame extends JFrame {
 						+ "20) Elencare tutti i giocatori che hanno subito un infortunio con gravità maggiore rispetto agli altri\n"
 						+ "21) Visualizzare l’arbitro che ha ammonito più giocatori.\n"
 						+ "22) Elencare tutti gli allenatori che hanno un contratto con una durata maggiore di 1 anno.\n"
-						+ "23) Visualizzare il modulo della singola partita disputata.\n");
+						+ "23) Visualizzare il modulo della singola partita disputata.\n"
+						+ "24) Generazione randomica di un partita in base alle squadre selezionate dall'utente.\n"
+						+ "25) Classifica runtime in base al campionato selezionato.\n");
 				listaQuery.setFont(font);
 				listaQuery.setEditable(false);
 				// Add Textarea in to middle panel
@@ -1123,9 +1133,88 @@ public class QueryFrame extends JFrame {
 			}
 
 		});
+
+		classifica.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent ev) {
+				frame6.setSize(300, 400);
+				frame6.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				frame6.setLocation(600, 350);
+				pannello6.add(Campionati);
+				area2.setVisible(true);
+				area2.setEditable(false);
+				pannello6.add(area2);
+				frame6.add(pannello6);
+				frame6.setVisible(true);
+
+				try {
+					PreparedStatement queryclasvit = (PreparedStatement) con
+							.prepareStatement("UPDATE campionato.Squadra SET Punti = Punti + '3'" + "WHERE Punti in ("
+									+ "SELECT Punti " + "FROM Partita "
+									+ "WHERE Squadra.CodS = Partita.CodSCasa AND Partita.GoalCasa > Partita.GoalTrasferta "
+									+ ")" + " OR " + "Punti in (" + "SELECT Punti " + "FROM Partita "
+									+ "WHERE Squadra.CodS = Partita.CodSTrasferta AND Partita.GoalCasa < Partita.GoalTrasferta );");
+					queryclasvit.executeUpdate();
+				} catch (Exception e) {
+					System.out.println("Errore query classifica vittoria");
+
+				}
+
+				try {
+					PreparedStatement queryclasspar = (PreparedStatement) con.prepareStatement(
+							"UPDATE campionato.Squadra s1, campionato.Squadra s2 SET s1.Punti = s1.Punti + '1'"
+									+ "WHERE s1.Punti in (" + "SELECT s1.Punti " + "FROM Partita "
+									+ "WHERE s1.CodS = Partita.CodSCasa AND s2.CodS = Partita.CodSTrasferta AND Partita.GoalCasa = Partita.GoalTrasferta )");
+					queryclasspar.executeUpdate();
+
+				} catch (Exception e) {
+					System.out.println("Errore query pareggio casa");
+					e.printStackTrace();
+				}
+				try {
+					PreparedStatement queryclasspartrasf = (PreparedStatement) con.prepareStatement(
+							"UPDATE campionato.Squadra s1, campionato.Squadra s2 SET s2.Punti = s2.Punti + '1'"
+									+ "WHERE s2.Punti in (" + "SELECT s2.Punti " + "FROM Partita "
+									+ "WHERE s1.CodS = Partita.CodSCasa AND s2.CodS = Partita.CodSTrasferta AND Partita.GoalCasa = Partita.GoalTrasferta );");
+
+					queryclasspartrasf.executeUpdate();
+
+				} catch (Exception e) {
+					System.out.println("Errore query pareggio trasferta");
+
+				}
+
+				Campionati.addActionListener(new ActionListener() {
+
+					public void actionPerformed(ActionEvent ev) {
+
+						try {
+							Statement stampaclassifica = con.createStatement();
+							ResultSet resultstampa = stampaclassifica.executeQuery("SELECT s.NomeS, s.Punti "
+									+ "FROM Campionato c, Squadra s " + "WHERE c.CodC = s.CodC and c.NomeC ='"
+									+ Campionati.getSelectedItem() + "'" + "ORDER BY s.Punti DESC ");
+							area2.setText("");
+							while (resultstampa.next()) {
+
+								String nomeS = resultstampa.getString("NomeS");
+								int punti = resultstampa.getInt("Punti");
+
+								area2.append("------- " + nomeS + " : " + punti + "\n\n");
+
+							}
+						} catch (Exception e) {
+							System.out.println("Errore stampa");
+						}
+					}
+				});
+			}
+
+		});
+
 		pane.setAlignmentY(getHeight());
 		pannello.add(query);
 		pannello.add(info);
+		pannello.add(classifica);
 		area.setEditable(false);
 		this.add(pannello, BorderLayout.NORTH);
 		this.add(pane);
